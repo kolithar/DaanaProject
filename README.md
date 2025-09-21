@@ -43,7 +43,7 @@ Daana.lk supports four main user roles:
 
 ## 👨‍💻 Development
 
-- *Developer:* [Kolitha Rathanayake](https://github.com/)
+- *Developer:* [Kolitha Rathanayake](https://github.com/kolithar)
 - *Version Control:* Git
 - *Branching Strategy:* (Recommended: GitFlow or feature-branch workflow)
 
@@ -54,5 +54,5 @@ Daana.lk supports four main user roles:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-org/daana.lk.git
-cd daana.lk
+git clone https://github.com/kolithar/DaanaProject.git
+cd DaanaProject
