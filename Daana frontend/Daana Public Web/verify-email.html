@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Email - Daana.lk</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .verify-page-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .verify-main-content {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 4rem 2rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: calc(100vh - 140px);
+        }
+
+        .verify-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 4rem 3rem;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .verify-header {
+            margin-bottom: 3rem;
+        }
+
+        .verify-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f51a2d, #ff6806);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .verify-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .verify-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .verify-form {
+            margin-top: 2.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: #f51a2d;
+            box-shadow: 0 0 0 3px rgba(245, 26, 45, 0.1);
+        }
+
+        .input-wrapper input.error {
+            border-color: #e74c3c;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .verify-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #f51a2d, #ff6806);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .verify-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(245, 26, 45, 0.3);
+        }
+
+        .verify-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-loading .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .verify-options {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e1e5e9;
+        }
+
+        .verify-options p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .resend-btn {
+            background: none;
+            border: 2px solid #f51a2d;
+            color: #f51a2d;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+        }
+
+        .resend-btn:hover:not(:disabled) {
+            background: #f51a2d;
+            color: white;
+        }
+
+        .resend-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .back-to-login {
+            color: #f51a2d;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .back-to-login:hover {
+            color: #ff6806;
+        }
+
+        .verify-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .verify-message-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .verify-message-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .otp-inputs {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .otp-input {
+            width: 50px !important;
+            height: 50px !important;
+            text-align: center !important;
+            font-size: 1.5rem !important;
+            font-weight: 600 !important;
+            border: 2px solid #e1e5e9 !important;
+            border-radius: 8px !important;
+            transition: all 0.3s ease !important;
+            background: white !important;
+            color: #000000 !important;
+            box-sizing: border-box !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .otp-input:focus {
+            outline: none !important;
+            border-color: #f51a2d !important;
+            box-shadow: 0 0 0 3px rgba(245, 26, 45, 0.1) !important;
+            background: #fff !important;
+            color: #000000 !important;
+        }
+
+        .otp-input.error {
+            border-color: #e74c3c !important;
+            background: #fff !important;
+            color: #000000 !important;
+        }
+
+        /* Force override any external styles */
+        input.otp-input {
+            color: #000000 !important;
+            background: white !important;
+        }
+
+        input.otp-input:focus {
+            color: #000000 !important;
+            background: white !important;
+        }
+
+        .otp-input::placeholder {
+            color: #999;
+        }
+
+        /* Footer Styles for Verification Page */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 2rem 0 1rem;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #f51a2d;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #f51a2d;
+        }
+
+        .footer-logo {
+            height: 40px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1rem;
+            margin-top: 2rem;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .verify-container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+
+            .verify-title {
+                font-size: 1.5rem;
+            }
+
+            .otp-inputs {
+                gap: 0.25rem;
+            }
+
+            .otp-input {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .footer-content {
+                padding: 0 1rem;
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="resources/logo/Danna-logo.webp" alt="Daana.lk" class="logo">
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#causes" class="nav-link">Causes</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#categories" class="nav-link">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="nav-auth">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="signup.html" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="verify-page-wrapper">
+        <div class="verify-main-content">
+            <div class="verify-container">
+                <div class="verify-header">
+                    <div class="verify-icon">
+                        <i class="fas fa-envelope-open"></i>
+                    </div>
+                    <h1 class="verify-title">Verify Your Email</h1>
+                    <p class="verify-subtitle">
+                        We've sent a 6-digit verification code to<br>
+                        <strong id="userEmail">your email address</strong>
+                    </p>
+                </div>
+
+                <div id="verifyMessage" class="verify-message"></div>
+
+                <form id="verifyForm" class="verify-form">
+                    <div class="input-group">
+                        <label for="otpCode">Enter Verification Code</label>
+                        <div class="otp-inputs">
+                            <input type="text" class="otp-input" maxlength="1" data-index="0">
+                            <input type="text" class="otp-input" maxlength="1" data-index="1">
+                            <input type="text" class="otp-input" maxlength="1" data-index="2">
+                            <input type="text" class="otp-input" maxlength="1" data-index="3">
+                            <input type="text" class="otp-input" maxlength="1" data-index="4">
+                            <input type="text" class="otp-input" maxlength="1" data-index="5">
+                        </div>
+                        <input type="hidden" id="otpCode" name="otpCode">
+                        <div id="otpCodeError" class="error-message"></div>
+                    </div>
+
+                    <button type="submit" id="verifyBtn" class="verify-btn">
+                        <span class="btn-text">Verify Email</span>
+                        <span class="btn-loading">
+                            <div class="spinner"></div>
+                            Verifying...
+                        </span>
+                    </button>
+                </form>
+
+                <div class="verify-options">
+                    <p>Didn't receive the code?</p>
+                    <button type="button" id="resendBtn" class="resend-btn">Resend Code</button>
+                    <a href="login.html" class="back-to-login">Back to Login</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="resources/logo/Danna-logo.webp" alt="Daana.lk" class="footer-logo">
+                    <p>Making a difference, one donation at a time.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#causes">Causes</a></li>
+                        <li><a href="index.html#categories">Categories</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Daana.lk. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="api-service.js"></script>
+    <script src="verify-email.js"></script>
+</body>
+</html>

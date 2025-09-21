@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Donation Programs - Daana.lk</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Search Page Specific Styles */
+        .search-hero {
+            background: linear-gradient(135deg, var(--primary-red), var(--primary-orange));
+            padding: 8rem 0 4rem;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .search-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .search-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .search-filters {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: -3rem auto 3rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            z-index: 10;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 1.5rem;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--white);
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(245, 26, 45, 0.1);
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, var(--primary-red), var(--primary-orange));
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .search-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results-section {
+            padding: 2rem 0;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .results-count {
+            font-size: 1.1rem;
+            color: var(--gray);
+        }
+
+        .results-count strong {
+            color: var(--primary-red);
+            font-weight: 700;
+        }
+
+        .sort-options {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sort-options label {
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+
+        .sort-options select {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            background: var(--white);
+            font-size: 0.9rem;
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .program-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .program-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .program-content {
+            padding: 1.5rem;
+        }
+
+        .program-category {
+            display: inline-block;
+            background: var(--primary-orange);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .program-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .program-description {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .program-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .program-location i {
+            color: var(--primary-red);
+        }
+
+        .program-progress {
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-red), var(--primary-orange));
+            transition: width 0.3s ease;
+        }
+
+        .program-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .program-percentage {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .program-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .program-actions .btn {
+            flex: 1;
+            font-size: 0.9rem;
+            padding: 0.75rem 1rem;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .pagination-btn {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--light-gray);
+            background: var(--white);
+            color: var(--dark-gray);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            border-color: var(--primary-red);
+            color: var(--primary-red);
+        }
+
+        .pagination-btn.active {
+            background: var(--primary-red);
+            color: var(--white);
+            border-color: var(--primary-red);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-red);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 0;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--light-gray);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+
+        .clear-filters {
+            background: transparent;
+            color: var(--primary-red);
+            border: 2px solid var(--primary-red);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+
+        .clear-filters:hover {
+            background: var(--primary-red);
+            color: var(--white);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .search-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .search-hero p {
+                font-size: 1.1rem;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .search-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .results-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .programs-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-hero {
+                padding: 6rem 0 3rem;
+            }
+
+            .search-hero h1 {
+                font-size: 2rem;
+            }
+
+            .search-filters {
+                margin: -2rem auto 2rem;
+                padding: 1.5rem;
+            }
+
+            .program-actions {
+                flex-direction: column;
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="resources/logo/Danna-logo.webp" alt="Daana.lk Logo" class="logo">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+                <li><a href="index.html#categories" class="nav-link">Categories</a></li>
+                <li><a href="index.html#causes" class="nav-link">Causes</a></li>
+                <li><a href="index.html#donate" class="nav-link">Donate</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                <li class="nav-auth" id="navAuth">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </li>
+                <li class="nav-profile" id="navProfile" style="display: none;">
+                    <div class="profile-dropdown">
+                        <button class="profile-trigger" onclick="toggleProfileDropdown()">
+                            <div class="profile-avatar-small">
+                                <img id="navProfileImage" src="" alt="Profile" style="display: none;">
+                                <div class="avatar-placeholder-small" id="navAvatarPlaceholder">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                            <span id="navProfileName">User</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="profile-dropdown-menu" id="profileDropdownMenu">
+                            <div class="profile-dropdown-header">
+                                <div class="profile-info-small">
+                                    <div class="profile-avatar-medium">
+                                        <img id="dropdownProfileImage" src="" alt="Profile" style="display: none;">
+                                        <div class="avatar-placeholder-medium" id="dropdownAvatarPlaceholder">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                    </div>
+                                    <div class="profile-details">
+                                        <h4 id="dropdownProfileName">User Name</h4>
+                                        <p id="dropdownProfileEmail">user@example.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-dropdown-content">
+                                <a href="donor-profile.html" class="dropdown-item">
+                                    <i class="fas fa-user-edit"></i>
+                                    <span>My Profile</span>
+                                </a>
+                                <a href="#" class="dropdown-item" onclick="showDashboard()">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                                <a href="#" class="dropdown-item" onclick="showDonationHistory()">
+                                    <i class="fas fa-history"></i>
+                                    <span>Donation History</span>
+                                </a>
+                                <a href="#" class="dropdown-item" onclick="showAccountSettings()">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Account Settings</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item logout-item" onclick="logout()">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Hero Section -->
+    <section class="search-hero">
+        <div class="search-container">
+            <h1>Find Your Cause</h1>
+            <p>Discover and support donation programs that align with your values and make a real difference in Sri Lankan communities.</p>
+        </div>
+    </section>
+
+    <!-- Search Filters -->
+    <div class="search-container">
+        <div class="search-filters">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label for="searchText">Search Programs</label>
+                    <input type="text" id="searchText" placeholder="Search by title or description...">
+                </div>
+                <div class="filter-group">
+                    <label for="categoryFilter">Category</label>
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="subCategoryFilter">Sub Category</label>
+                    <select id="subCategoryFilter">
+                        <option value="">All Sub Categories</option>
+                    </select>
+                </div>
+                <button class="search-btn" onclick="searchPrograms()">
+                    <i class="fas fa-search"></i>
+                    Search
+                </button>
+            </div>
+            <div style="margin-top: 1rem; text-align: right;">
+                <button class="clear-filters" onclick="clearFilters()">
+                    <i class="fas fa-times"></i>
+                    Clear Filters
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <section class="results-section">
+        <div class="search-container">
+            <div class="results-header">
+                <div class="results-count">
+                    Showing <strong id="resultsCount">0</strong> programs
+                </div>
+                <div class="sort-options">
+                    <label for="sortBy">Sort by:</label>
+                    <select id="sortBy" onchange="sortPrograms()">
+                        <option value="created">Newest First</option>
+                        <option value="raised">Most Funded</option>
+                        <option value="target">Highest Goal</option>
+                        <option value="progress">Progress %</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-state" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p>Searching programs...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>No programs found</h3>
+                <p>Try adjusting your search criteria or browse all programs.</p>
+                <button class="btn btn-primary" onclick="clearFilters()">Show All Programs</button>
+            </div>
+
+            <!-- Programs Grid -->
+            <div id="programsGrid" class="programs-grid">
+                <!-- Programs will be loaded here -->
+            </div>
+
+            <!-- Pagination -->
+            <div id="pagination" class="pagination" style="display: none;">
+                <!-- Pagination buttons will be generated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="resources/logo/Danna-logo.webp" alt="Daana.lk Logo" class="logo">
+                    </div>
+                    <p>Connecting hearts, creating change, building a better Sri Lanka together.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#causes">Our Causes</a></li>
+                        <li><a href="index.html#donate">Donate</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Transparency Report</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <p>Stay updated with our latest initiatives</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Daana.lk. All rights reserved. | Registered Non-Profit Organization</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Program Details Modal -->
+    <div id="programModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImage" src="" alt="">
+                </div>
+                <div class="modal-info">
+                    <div class="modal-category" id="modalCategory"></div>
+                    <h2 id="modalTitle"></h2>
+                    <p id="modalDescription"></p>
+                    <div class="modal-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="modalLocation"></span>
+                    </div>
+                    <div class="modal-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="modalProgressFill"></div>
+                        </div>
+                        <div class="modal-stats">
+                            <span id="modalRaised"></span>
+                            <span id="modalTarget"></span>
+                        </div>
+                        <div class="modal-percentage" id="modalPercentage"></div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-primary" id="modalDonateBtn">Donate Now</button>
+                        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="api-service.js"></script>
+    <script src="auth.js"></script>
+    <script src="search-programs.js"></script>
+</body>
+</html>

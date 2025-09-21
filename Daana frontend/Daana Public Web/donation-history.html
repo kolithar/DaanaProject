@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation History - Daana.lk</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="resources/logo/Danna-logo.webp" alt="Daana.lk Logo" class="logo">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#about" class="nav-link" onclick="navigateToSection('about')">About</a></li>
+                <li><a href="index.html#categories" class="nav-link" onclick="navigateToSection('categories')">Categories</a></li>
+                <li><a href="index.html#causes" class="nav-link" onclick="navigateToSection('causes')">Causes</a></li>
+                <li><a href="index.html#donate" class="nav-link" onclick="navigateToSection('donate')">Donate</a></li>
+                <li><a href="index.html#contact" class="nav-link" onclick="navigateToSection('contact')">Contact</a></li>
+                <li class="nav-auth" id="navAuth">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="donation-history-main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span>/</span>
+                    <a href="donor-profile.html">Profile</a>
+                    <span>/</span>
+                    <span>Donation History</span>
+                </div>
+                <h1><i class="fas fa-history"></i> Donation History</h1>
+                <p>View your past donations and their impact on the community</p>
+            </div>
+
+            <!-- Donation Statistics -->
+            <div class="donation-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4>Total Donations</h4>
+                        <p id="totalDonations">Loading...</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-rupee-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4>Total Amount</h4>
+                        <p id="totalAmount">Loading...</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4>Campaigns Supported</h4>
+                        <p id="campaignsSupported">Loading...</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h4>Last Donation</h4>
+                        <p id="lastDonation">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters and Controls -->
+            <div class="donation-history-filters">
+                <!-- Date Range Filters -->
+                <div class="filter-section">
+                    <h4><i class="fas fa-calendar-alt"></i> Date Range</h4>
+                    <div class="date-range-filters">
+                        <div class="filter-group">
+                            <label for="startDate">From:</label>
+                            <input type="date" id="startDate" onchange="applyDateFilters()">
+                        </div>
+                        <div class="filter-group">
+                            <label for="endDate">To:</label>
+                            <input type="date" id="endDate" onchange="applyDateFilters()">
+                        </div>
+                        <div class="filter-group">
+                            <label>Quick Filters:</label>
+                            <div class="quick-date-buttons">
+                                <button class="btn btn-sm btn-outline" onclick="setQuickDateRange('today')">Today</button>
+                                <button class="btn btn-sm btn-outline" onclick="setQuickDateRange('week')">This Week</button>
+                                <button class="btn btn-sm btn-outline" onclick="setQuickDateRange('month')">This Month</button>
+                                <button class="btn btn-sm btn-outline" onclick="setQuickDateRange('year')">This Year</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clear Filters Button -->
+                <div class="filter-section">
+                    <div class="other-filters">
+                        <div class="filter-group">
+                            <button class="btn btn-outline" onclick="clearFilters()">
+                                <i class="fas fa-times"></i> Clear Date Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Donation List -->
+            <div class="donation-list" id="donationList">
+                <div class="loading-placeholder">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading donation history...</p>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="donationPagination" style="display: none;">
+                <button class="btn btn-outline" id="prevPageBtn" onclick="loadDonationPage('prev')" disabled>
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <span class="page-info" id="pageInfo">Page 1 of 1</span>
+                <button class="btn btn-outline" id="nextPageBtn" onclick="loadDonationPage('next')" disabled>
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading donation history...</p>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="api-service.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script src="donation-history.js"></script>
+    <script>
+        // Navigation function to handle section links
+        function navigateToSection(sectionId) {
+            // Navigate to the main page first
+            window.location.href = 'index.html#' + sectionId;
+        }
+    </script>
+</body>
+</html>

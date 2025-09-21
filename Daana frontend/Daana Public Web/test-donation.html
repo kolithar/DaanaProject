@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Donation Modal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div style="padding: 2rem; text-align: center;">
+        <h1>Test Donation Modal</h1>
+        <button class="btn btn-primary" onclick="testDonationModal()">
+            Test Donation Modal
+        </button>
+    </div>
+
+    <!-- Donation Modal -->
+    <div id="donationModal" class="modal">
+        <div class="modal-content donation-modal-content">
+            <span class="close" onclick="closeDonationModal()">&times;</span>
+            <div class="donation-modal-header">
+                <h2>Make a Donation</h2>
+                <p id="donationModalProgramTitle">Supporting a great cause</p>
+            </div>
+            
+            <div class="donation-modal-body">
+                <!-- Donor Type Selection -->
+                <div class="donor-type-selection" id="donorTypeSelection">
+                    <h3>How would you like to donate?</h3>
+                    <div class="donor-type-options">
+                        <div class="donor-type-card" onclick="selectDonorType('anonymous')">
+                            <div class="donor-type-icon">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                            <h4>Anonymous Donation</h4>
+                            <p>Donate without creating an account. Quick and easy!</p>
+                            <div class="donor-type-features">
+                                <span><i class="fas fa-check"></i> No registration required</span>
+                                <span><i class="fas fa-check"></i> Quick donation process</span>
+                                <span><i class="fas fa-check"></i> Your identity remains private</span>
+                            </div>
+                        </div>
+                        <div class="donor-type-card" onclick="selectDonorType('registered')">
+                            <div class="donor-type-icon">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <h4>Registered Donor</h4>
+                            <p>Create an account to track your donations and impact.</p>
+                            <div class="donor-type-features">
+                                <span><i class="fas fa-check"></i> Track donation history</span>
+                                <span><i class="fas fa-check"></i> Receive updates on impact</span>
+                                <span><i class="fas fa-check"></i> Tax receipts available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anonymous Donation Form -->
+                <div class="donation-form-section" id="anonymousDonationForm" style="display: none;">
+                    <form id="anonymousDonationFormElement">
+                        <div class="form-group">
+                            <label for="anonymousAmount">Donation Amount (LKR)</label>
+                            <div class="amount-buttons">
+                                <button type="button" class="amount-btn" data-amount="500">500</button>
+                                <button type="button" class="amount-btn" data-amount="1000">1,000</button>
+                                <button type="button" class="amount-btn" data-amount="2500">2,500</button>
+                                <button type="button" class="amount-btn" data-amount="5000">5,000</button>
+                                <button type="button" class="amount-btn" data-amount="10000">10,000</button>
+                            </div>
+                            <input type="number" id="anonymousAmount" name="amount" placeholder="Enter custom amount" min="100" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="paymentMethod">Payment Method</label>
+                            <select id="paymentMethod" name="paymentMethod" required>
+                                <option value="">Select payment method</option>
+                                <option value="BANK_TRANSFER">Bank Transfer</option>
+                                <option value="CREDIT_CARD">Credit Card</option>
+                                <option value="DEBIT_CARD">Debit Card</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="anonymousComments">Comments (Optional)</label>
+                            <textarea id="anonymousComments" name="comments" placeholder="Add a message with your donation..." rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group" id="paymentSlipSection" style="display: none;">
+                            <label for="paymentSlip">Payment Slip/Receipt</label>
+                            <input type="file" id="paymentSlip" name="paymentSlip" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileUpload(this)">
+                            <small class="file-help">Upload your bank transfer receipt or payment confirmation (PDF, JPG, PNG)</small>
+                        </div>
+
+                        <div class="donation-summary">
+                            <div class="summary-item">
+                                <span>Donation Amount:</span>
+                                <span id="summaryAmount">LKR 0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Service Charge (2.5%):</span>
+                                <span id="summaryServiceCharge">LKR 0</span>
+                            </div>
+                            <div class="summary-item total">
+                                <span>Total Amount:</span>
+                                <span id="summaryTotal">LKR 0</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <span class="btn-text">Donate Now</span>
+                            <span class="btn-loading" style="display: none;">
+                                <i class="fas fa-spinner fa-spin"></i> Processing...
+                            </span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Registered Donor Login/Register Prompt -->
+                <div class="registered-donor-section" id="registeredDonorSection" style="display: none;">
+                    <div class="login-prompt">
+                        <div class="login-prompt-icon">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </div>
+                        <h3>Login Required</h3>
+                        <p>To donate as a registered donor, please login to your account or create a new one.</p>
+                        <div class="login-actions">
+                            <a href="login.html" class="btn btn-primary">Login</a>
+                            <a href="signup.html" class="btn btn-outline">Sign Up</a>
+                        </div>
+                        <div class="back-to-options">
+                            <button type="button" class="btn btn-text" onclick="backToDonorTypeSelection()">
+                                <i class="fas fa-arrow-left"></i> Back to donation options
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="api-service.js"></script>
+    
+    <script>
+        // Test function
+        function testDonationModal() {
+            console.log('Testing donation modal...');
+            
+            const program = {
+                programId: 1,
+                id: 1,
+                title: 'Test Program',
+                programTitle: 'Test Program',
+                description: 'This is a test program',
+                category: 'Test Category',
+                location: 'Test Location',
+                image: 'resources/slider/youtube thumbnail.webp',
+                target: 100000,
+                raised: 50000
+            };
+            
+            if (typeof window.openDonationModal === 'function') {
+                console.log('Using window.openDonationModal');
+                window.openDonationModal(program);
+            } else {
+                console.log('window.openDonationModal not found, using direct approach');
+                // Direct approach
+                const modal = document.getElementById('donationModal');
+                if (modal) {
+                    const titleElement = document.getElementById('donationModalProgramTitle');
+                    if (titleElement) {
+                        titleElement.textContent = `Supporting: ${program.title}`;
+                    }
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    console.error('Modal not found');
+                }
+            }
+        }
+        
+        // Close modal function
+        function closeDonationModal() {
+            const modal = document.getElementById('donationModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Test on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Test page loaded');
+            console.log('window.openDonationModal available:', typeof window.openDonationModal === 'function');
+        });
+    </script>
+</body>
+</html>

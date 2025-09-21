@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Storage Test - Daana.lk</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+        }
+        .test-section h3 {
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+        }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .console-output {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        .status-indicator {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        .status-valid {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-invalid {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1><i class="fas fa-key"></i> Token Storage & API Test</h1>
+        <p>This page helps you test and debug the authentication token storage and API integration.</p>
+
+        <!-- Authentication Status -->
+        <div class="test-section">
+            <h3><i class="fas fa-info-circle"></i> Authentication Status</h3>
+            <div id="authStatus">
+                <p>Loading authentication status...</p>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-outline" onclick="checkAuthStatus()">
+                    <i class="fas fa-refresh"></i> Refresh Status
+                </button>
+                <button class="btn btn-primary" onclick="window.location.href='login.html'">
+                    <i class="fas fa-sign-in-alt"></i> Go to Login
+                </button>
+            </div>
+        </div>
+
+        <!-- Token Management -->
+        <div class="test-section">
+            <h3><i class="fas fa-database"></i> Token Storage</h3>
+            <div class="btn-group">
+                <button class="btn btn-outline" onclick="testLocalStorage()">
+                    <i class="fas fa-list"></i> Show Stored Data
+                </button>
+                <button class="btn btn-outline" onclick="validateToken()">
+                    <i class="fas fa-check-circle"></i> Validate Token
+                </button>
+                <button class="btn btn-outline" onclick="getCurrentToken()">
+                    <i class="fas fa-key"></i> Get Current Token
+                </button>
+            </div>
+        </div>
+
+        <!-- API Testing -->
+        <div class="test-section">
+            <h3><i class="fas fa-cloud"></i> API Testing</h3>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="testDonationHistoryAPI()">
+                    <i class="fas fa-history"></i> Test Donation History API
+                </button>
+                <button class="btn btn-outline" onclick="testProfileAPI()">
+                    <i class="fas fa-user"></i> Test Profile API
+                </button>
+            </div>
+        </div>
+
+        <!-- Console Output -->
+        <div class="test-section">
+            <h3><i class="fas fa-terminal"></i> Console Output</h3>
+            <div class="btn-group">
+                <button class="btn btn-outline btn-sm" onclick="clearConsole()">
+                    <i class="fas fa-trash"></i> Clear
+                </button>
+            </div>
+            <div id="consoleOutput" class="console-output">
+                Open browser console (F12) to see detailed output...
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="api-service.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
+        });
+
+        function checkAuthStatus() {
+            const authStatus = document.getElementById('authStatus');
+            const token = localStorage.getItem('daana_access_token');
+            const user = localStorage.getItem('daana_user');
+            
+            if (token && user) {
+                const userData = JSON.parse(user);
+                const isValid = validateToken();
+                
+                authStatus.innerHTML = `
+                    <p>
+                        <strong>Status:</strong> 
+                        <span class="status-indicator ${isValid ? 'status-valid' : 'status-invalid'}">
+                            ${isValid ? 'AUTHENTICATED' : 'TOKEN EXPIRED'}
+                        </span>
+                    </p>
+                    <p><strong>User:</strong> ${userData.email || userData.fullName || 'Unknown'}</p>
+                    <p><strong>Token:</strong> ${token.substring(0, 20)}...</p>
+                    <p><strong>Storage:</strong> localStorage ✅</p>
+                `;
+            } else {
+                authStatus.innerHTML = `
+                    <p><strong>Status:</strong> 
+                        <span class="status-indicator status-invalid">NOT AUTHENTICATED</span>
+                    </p>
+                    <p>No authentication token found in localStorage.</p>
+                    <p>Please login to access protected features.</p>
+                `;
+            }
+        }
+
+        function getCurrentToken() {
+            const token = getAuthToken();
+            if (token) {
+                console.log('Current Token:', token);
+                console.log('Token Length:', token.length);
+                console.log('Token Preview:', token.substring(0, 50) + '...');
+            } else {
+                console.log('No valid token found');
+            }
+        }
+
+        function testProfileAPI() {
+            const token = getAuthToken();
+            if (!token) {
+                console.log('❌ No valid token found. Please login first.');
+                return;
+            }
+            
+            console.log('🔍 Testing Profile API...');
+            
+            fetch('http://localhost:8080/api/v1/donor/profile', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                console.log('Profile API Response Status:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('✅ Profile API Success:', data);
+            })
+            .catch(error => {
+                console.error('❌ Profile API Error:', error);
+            });
+        }
+
+        function clearConsole() {
+            document.getElementById('consoleOutput').textContent = 'Console cleared. Check browser console (F12) for detailed output.';
+        }
+
+        // Capture console.log and display in the page
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const output = document.getElementById('consoleOutput');
+            output.textContent += args.join(' ') + '\n';
+            output.scrollTop = output.scrollHeight;
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            const output = document.getElementById('consoleOutput');
+            output.textContent += 'ERROR: ' + args.join(' ') + '\n';
+            output.scrollTop = output.scrollHeight;
+        };
+    </script>
+</body>
+</html>

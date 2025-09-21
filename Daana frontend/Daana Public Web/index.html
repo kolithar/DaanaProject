@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daana.lk - Sri Lankan Non-Profit Donation Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="resources/logo/Danna-logo.webp" alt="Daana.lk Logo" class="logo">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#categories" class="nav-link">Categories</a></li>
+                <li><a href="#causes" class="nav-link">Causes</a></li>
+                <li><a href="#donate" class="nav-link">Donate</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li class="nav-auth" id="navAuth">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </li>
+                <li class="nav-profile" id="navProfile" style="display: block;">
+                    <div class="profile-dropdown">
+                        <button class="profile-trigger" onclick="toggleProfileDropdown()">
+                            <div class="profile-avatar-small">
+                                <img id="navProfileImage" src="" alt="Profile" style="display: none;">
+                                <div class="avatar-placeholder-small" id="navAvatarPlaceholder">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                            <span id="navProfileName">Test User</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="profile-dropdown-menu" id="profileDropdownMenu">
+                            <div class="profile-dropdown-header">
+                                <div class="profile-info-small">
+                                    <div class="profile-avatar-medium">
+                                        <img id="dropdownProfileImage" src="" alt="Profile" style="display: none;">
+                                        <div class="avatar-placeholder-medium" id="dropdownAvatarPlaceholder">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                    </div>
+                                    <div class="profile-details">
+                                        <h4 id="dropdownProfileName">Test User</h4>
+                                        <p id="dropdownProfileEmail">test@example.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-dropdown-content">
+                                <a href="donor-profile.html" class="dropdown-item">
+                                    <i class="fas fa-user-edit"></i>
+                                    <span>My Profile</span>
+                                </a>
+                                <a href="donor-profile.html" class="dropdown-item">
+                                    <i class="fas fa-user-cog"></i>
+                                    <span>Profile Manage</span>
+                                </a>
+                                <a href="#" class="dropdown-item" onclick="showDonationHistory()">
+                                    <i class="fas fa-history"></i>
+                                    <span>Donation History</span>
+                                </a>
+                                <a href="#" class="dropdown-item" onclick="showAccountSettings()">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Account Settings</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item logout-item" onclick="logout()">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-slider">
+            <div class="slide active">
+                <img src="resources/slider/youtube thumbnail.webp" alt="Helping Community">
+                <div class="slide-overlay">
+                    <div class="hero-content">
+                        <h1>Making a Difference in Sri Lanka</h1>
+                        <p>Join us in creating positive change through compassionate giving and community support</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="scrollToDonate()">Donate Now</button>
+                            <button class="btn btn-secondary" onclick="scrollToCauses()">View Causes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="resources/slider/youtube thumbnail-1.webp" alt="Community Support">
+                <div class="slide-overlay">
+                    <div class="hero-content">
+                        <h1>Building Stronger Communities</h1>
+                        <p>Together we can create lasting impact and bring hope to those in need</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="scrollToDonate()">Donate Now</button>
+                            <button class="btn btn-secondary" onclick="scrollToCauses()">View Causes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="resources/slider/youtube thumbnail-2.webp" alt="Education Support">
+                <div class="slide-overlay">
+                    <div class="hero-content">
+                        <h1>Empowering Through Education</h1>
+                        <p>Supporting education and development initiatives across Sri Lanka</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="scrollToDonate()">Donate Now</button>
+                            <button class="btn btn-secondary" onclick="scrollToCauses()">View Causes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider-controls">
+            <button class="prev-btn" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="next-btn" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="slider-dots">
+            <span class="dot active" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="1250">0</div>
+                    <div class="stat-label">Lives Impacted</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="45">0</div>
+                    <div class="stat-label">Active Projects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="89">0</div>
+                    <div class="stat-label">Communities Served</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="98">0</div>
+                    <div class="stat-label">Success Rate %</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>About Daana.lk</h2>
+                <p>Connecting hearts and creating positive change across Sri Lanka</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Our Mission</h3>
+                    <p>Daana.lk is a Sri Lankan non-profit donation platform dedicated to creating meaningful impact in communities across the island. We believe in the power of collective giving and the strength of our united efforts to bring about positive change.</p>
+                    
+                    <h3>What We Do</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-heart"></i> Support education initiatives</li>
+                        <li><i class="fas fa-home"></i> Provide housing assistance</li>
+                        <li><i class="fas fa-utensils"></i> Fight food insecurity</li>
+                        <li><i class="fas fa-medkit"></i> Improve healthcare access</li>
+                        <li><i class="fas fa-users"></i> Strengthen communities</li>
+                    </ul>
+                </div>
+                <div class="about-image">
+                    <img src="resources/slider/youtube thumbnail-1.webp" alt="About Daana.lk">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Categories</h2>
+                <p>Find causes that align with your passion and values</p>
+            </div>
+            <!-- Horizontal Categories List -->
+            <div class="categories-horizontal">
+                <div class="categories-scroll-container">
+                    <div class="categories-track" id="categoriesTrack">
+                        <!-- Categories will be loaded dynamically from API -->
+                        <div class="category-card loading">
+                            <div class="loading-skeleton"></div>
+                        </div>
+                        <div class="category-card loading">
+                            <div class="loading-skeleton"></div>
+                        </div>
+                        <div class="category-card loading">
+                            <div class="loading-skeleton"></div>
+                        </div>
+                        <div class="category-card loading">
+                            <div class="loading-skeleton"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="categories-nav">
+                    <button class="category-nav-btn prev" onclick="scrollCategories(-1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="category-nav-btn next" onclick="scrollCategories(1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Selected Category Details -->
+            <div class="selected-category-details" id="selectedCategoryDetails">
+                <div class="category-image-section">
+                    <img id="selectedCategoryImage" src="resources/slider/youtube thumbnail.webp" alt="Category Image" class="category-main-image">
+                </div>
+                <div class="category-info-section">
+                    <h3 id="selectedCategoryName">Select a category to view details</h3>
+                    <p id="selectedCategoryDescription">Click on any category above to see its description and subcategories.</p>
+                    <div class="subcategories-section">
+                        <h4>Sub categories</h4>
+                        <div class="subcategories-grid" id="subcategoriesGrid">
+                            <!-- Subcategories will be populated when category is selected -->
+                        </div>
+                    </div>
+                    <a href="search-programs.html" class="explore-category-btn" style="display: none; text-decoration: none;">
+                        <i class="fas fa-layer-group"></i>
+                        Explore Programs in this Category
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Causes Section -->
+    <section id="causes" class="causes">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Causes</h2>
+                <p>Support the causes that matter most to Sri Lankan communities</p>
+            </div>
+            
+            <!-- Trending Causes -->
+            <div class="causes-subsection">
+                <div class="subsection-header">
+                    <h3>🔥 Trending Causes</h3>
+                    <p>Most popular causes right now</p>
+                </div>
+                <div class="causes-carousel-container">
+                    <button class="carousel-btn prev-btn" onclick="scrollCarousel('trending', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="causes-carousel" id="trendingCausesCarousel">
+                        <div class="causes-track" id="trendingCausesTrack">
+                            <!-- Trending causes will be loaded dynamically from API -->
+                            <div class="cause-card loading">
+                                <div class="loading-skeleton"></div>
+                            </div>
+                            <div class="cause-card loading">
+                                <div class="loading-skeleton"></div>
+                            </div>
+                            <div class="cause-card loading">
+                                <div class="loading-skeleton"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="scrollCarousel('trending', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Latest Causes -->
+            <div class="causes-subsection">
+                <div class="subsection-header">
+                    <h3>✨ Latest Causes</h3>
+                    <p>Recently launched programs</p>
+                </div>
+                <div class="causes-carousel-container">
+                    <button class="carousel-btn prev-btn" onclick="scrollCarousel('latest', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="causes-carousel" id="latestCausesCarousel">
+                        <div class="causes-track" id="latestCausesTrack">
+                            <!-- Latest causes will be loaded dynamically from API -->
+                            <div class="cause-card loading">
+                                <div class="loading-skeleton"></div>
+                            </div>
+                            <div class="cause-card loading">
+                                <div class="loading-skeleton"></div>
+                            </div>
+                            <div class="cause-card loading">
+                                <div class="loading-skeleton"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="scrollCarousel('latest', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- View All Programs Button -->
+            <div class="view-all-section">
+                <a href="search-programs.html" class="btn btn-primary btn-large">
+                    <i class="fas fa-eye"></i>
+                    View All Programs
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Section -->
+    <section id="donate" class="donate">
+        <div class="container">
+            <div class="donate-content">
+                <div class="donate-text">
+                    <h2>Make a Difference Today</h2>
+                    <p>Your contribution, no matter the size, can create lasting positive change in someone's life. Join thousands of compassionate donors who are making Sri Lanka a better place.</p>
+                    <div class="donation-features">
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>100% Secure</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Transparent</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-heart"></i>
+                            <span>Impact Focused</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="donation-form">
+                    <h3>Quick Donation</h3>
+                    <form id="donationForm">
+                        <div class="form-group">
+                            <label for="amount">Donation Amount (LKR)</label>
+                            <div class="amount-buttons">
+                                <button type="button" class="amount-btn" data-amount="500">500</button>
+                                <button type="button" class="amount-btn" data-amount="1000">1,000</button>
+                                <button type="button" class="amount-btn" data-amount="2500">2,500</button>
+                                <button type="button" class="amount-btn" data-amount="5000">5,000</button>
+                            </div>
+                            <input type="number" id="amount" name="amount" placeholder="Enter custom amount" min="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="cause">Select Cause</label>
+                            <select id="cause" name="cause" required>
+                                <option value="">Choose a cause</option>
+                                <option value="mental-health-support">Mental Health Support</option>
+                                <option value="emergency-medical-fund">Emergency Medical Fund</option>
+                                <option value="elderly-care-initiative">Elderly Care Initiative</option>
+                                <option value="flood-relief-fund">Flood Relief Fund</option>
+                                <option value="wildlife-conservation">Wildlife Conservation</option>
+                                <option value="tree-planting-initiative">Tree Planting Initiative</option>
+                                <option value="general">General Fund</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="donorName">Your Name</label>
+                            <input type="text" id="donorName" name="donorName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Continue to Donation</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What People Say</h2>
+                <p>Stories of impact from our community</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Daana.lk helped our village get clean water. The transparency and impact are incredible."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Priya Fernando</h4>
+                            <span>Village Leader, Gampaha</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Through this platform, I've been able to support education in my hometown. It's truly rewarding."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Rajesh Kumar</h4>
+                            <span>Donor, Colombo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"The medical assistance we received saved my daughter's life. We're forever grateful."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <h4>Nimal Perera</h4>
+                            <span>Parent, Kandy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Charity Registration Section -->
+    <section class="charity-registration-cta">
+        <div class="container">
+            <div class="charity-cta-content">
+                <div class="charity-cta-text">
+                    <div class="charity-cta-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h2>Start Your Donation Program</h2>
+                    <p>Join thousands of organizations making a difference in Sri Lanka. Register your charity today and begin creating positive change in your community.</p>
+                    <div class="charity-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Easy Registration Process</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Secure Payment Processing</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Transparent Reporting</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>24/7 Support</span>
+                        </div>
+                    </div>
+                    <a href="charity-registration.html" class="btn btn-primary btn-large">
+                        <i class="fas fa-rocket"></i>
+                        Register Your Charity Now
+                    </a>
+                </div>
+                <div class="charity-cta-visual">
+                    <div class="charity-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Active Charities</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">LKR 50M+</div>
+                            <div class="stat-label">Funds Raised</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">25K+</div>
+                            <div class="stat-label">Lives Impacted</div>
+                        </div>
+                    </div>
+                    <div class="charity-illustration">
+                        <div class="illustration-circle">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="illustration-dots">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Get in Touch</h2>
+                    <p>Have questions or want to partner with us? We'd love to hear from you.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Address</h4>
+                                <p>123 Independence Avenue<br>Colombo 07, Sri Lanka</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>+94 11 234 5678</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>info@daana.lk</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="resources/logo/Danna-logo.webp" alt="Daana.lk Logo" class="logo">
+                    </div>
+                    <p>Connecting hearts, creating change, building a better Sri Lanka together.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#causes">Our Causes</a></li>
+                        <li><a href="#donate">Donate</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Transparency Report</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <p>Stay updated with our latest initiatives</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Daana.lk. All rights reserved. | Registered Non-Profit Organization</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Program Details Modal -->
+    <div id="programModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImage" src="" alt="">
+                </div>
+                <div class="modal-info">
+                    <div class="modal-category" id="modalCategory"></div>
+                    <h2 id="modalTitle"></h2>
+                    <p id="modalDescription"></p>
+                    <div class="modal-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="modalLocation"></span>
+                    </div>
+                    <div class="modal-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="modalProgressFill"></div>
+                        </div>
+                        <div class="modal-stats">
+                            <span id="modalRaised"></span>
+                            <span id="modalTarget"></span>
+                        </div>
+                        <div class="modal-percentage" id="modalPercentage"></div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-primary" id="modalDonateBtn">Donate Now</button>
+                        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donation Modal -->
+    <div id="donationModal" class="modal">
+        <div class="modal-content donation-modal-content">
+            <span class="close" onclick="closeDonationModal()">&times;</span>
+            <div class="donation-modal-header">
+                <h2>Make a Donation</h2>
+                <p id="donationModalProgramTitle">Supporting a great cause</p>
+            </div>
+            
+            <div class="donation-modal-body">
+                <!-- Donor Type Selection -->
+                <div class="donor-type-selection" id="donorTypeSelection">
+                    <h3>How would you like to donate?</h3>
+                    <div class="donor-type-options">
+                        <div class="donor-type-card" onclick="selectDonorType('anonymous')">
+                            <div class="donor-type-icon">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                            <h4>Anonymous Donation</h4>
+                            <p>Donate without creating an account. Quick and easy!</p>
+                            <div class="donor-type-features">
+                                <span><i class="fas fa-check"></i> No registration required</span>
+                                <span><i class="fas fa-check"></i> Quick donation process</span>
+                                <span><i class="fas fa-check"></i> Your identity remains private</span>
+                            </div>
+                        </div>
+                        <div class="donor-type-card" onclick="selectDonorType('registered')">
+                            <div class="donor-type-icon">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <h4>Registered Donor</h4>
+                            <p>Create an account to track your donations and impact.</p>
+                            <div class="donor-type-features">
+                                <span><i class="fas fa-check"></i> Track donation history</span>
+                                <span><i class="fas fa-check"></i> Receive updates on impact</span>
+                                <span><i class="fas fa-check"></i> Tax receipts available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anonymous Donation Form -->
+                <div class="donation-form-section" id="anonymousDonationForm" style="display: none;">
+                    <form id="anonymousDonationFormElement">
+                        <div class="form-group">
+                            <label for="anonymousAmount">Donation Amount (LKR)</label>
+                            <div class="amount-buttons">
+                                <button type="button" class="amount-btn" data-amount="500">500</button>
+                                <button type="button" class="amount-btn" data-amount="1000">1,000</button>
+                                <button type="button" class="amount-btn" data-amount="2500">2,500</button>
+                                <button type="button" class="amount-btn" data-amount="5000">5,000</button>
+                                <button type="button" class="amount-btn" data-amount="10000">10,000</button>
+                            </div>
+                            <input type="number" id="anonymousAmount" name="amount" placeholder="Enter custom amount" min="100" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="paymentMethod">Payment Method</label>
+                            <select id="paymentMethod" name="paymentMethod" required>
+                                <option value="">Select payment method</option>
+                                <option value="BANK_TRANSFER">Bank Transfer</option>
+                                <option value="CREDIT_CARD">Credit Card</option>
+                                <option value="DEBIT_CARD">Debit Card</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="anonymousComments">Comments (Optional)</label>
+                            <textarea id="anonymousComments" name="comments" placeholder="Add a message with your donation..." rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group" id="paymentSlipSection" style="display: none;">
+                            <label for="paymentSlip">Payment Slip/Receipt</label>
+                            <input type="file" id="paymentSlip" name="paymentSlip" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileUpload(this)">
+                            <small class="file-help">Upload your bank transfer receipt or payment confirmation (PDF, JPG, PNG)</small>
+                        </div>
+
+                        <div class="donation-summary">
+                            <div class="summary-item">
+                                <span>Donation Amount:</span>
+                                <span id="summaryAmount">LKR 0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Service Charge (2.5%):</span>
+                                <span id="summaryServiceCharge">LKR 0</span>
+                            </div>
+                            <div class="summary-item total">
+                                <span>Total Amount:</span>
+                                <span id="summaryTotal">LKR 0</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <span class="btn-text">Donate Now</span>
+                            <span class="btn-loading" style="display: none;">
+                                <i class="fas fa-spinner fa-spin"></i> Processing...
+                            </span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Registered Donor Login/Register Prompt -->
+                <div class="registered-donor-section" id="registeredDonorSection" style="display: none;">
+                    <div class="login-prompt">
+                        <div class="login-prompt-icon">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </div>
+                        <h3>Login Required</h3>
+                        <p>To donate as a registered donor, please login to your account or create a new one.</p>
+                        <div class="login-actions">
+                            <a href="login.html" class="btn btn-primary">Login</a>
+                            <a href="signup.html" class="btn btn-outline">Sign Up</a>
+                        </div>
+                        <div class="back-to-options">
+                            <button type="button" class="btn btn-text" onclick="backToDonorTypeSelection()">
+                                <i class="fas fa-arrow-left"></i> Back to donation options
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donation Success Modal -->
+    <div id="donationSuccessModal" class="modal">
+        <div class="modal-content success-modal-content">
+            <div class="success-modal-body">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Donation Successful!</h2>
+                <p id="successMessage">Thank you for your generous donation. Your contribution will make a real difference.</p>
+                
+                <div class="donation-details" id="donationDetails">
+                    <div class="detail-item">
+                        <span class="label">Donation ID:</span>
+                        <span class="value" id="donationId">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Amount:</span>
+                        <span class="value" id="donationAmount">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Net Amount:</span>
+                        <span class="value" id="netAmount">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Payment Reference:</span>
+                        <span class="value" id="paymentReference">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Status:</span>
+                        <span class="value status" id="donationStatus">-</span>
+                    </div>
+                </div>
+
+                <div class="success-actions">
+                    <button class="btn btn-primary" onclick="closeDonationSuccessModal()">Continue</button>
+                    <button class="btn btn-outline" onclick="downloadReceipt()">Download Receipt</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="api-service.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

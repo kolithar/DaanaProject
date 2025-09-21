@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charity Registration - Daana.lk</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Charity Registration Page Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+        }
+
+        .charity-registration-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 140px);
+            padding: 2rem 0;
+        }
+
+        .charity-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem;
+            min-height: 600px;
+        }
+
+        .charity-header {
+            background: linear-gradient(135deg, #f51a2d, #ff6806);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .charity-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .charity-header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .charity-logo {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .charity-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .charity-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Step Progress Indicator */
+        .step-progress {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2rem 1rem;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            gap: 2rem;
+        }
+
+        .step-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .step-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: calc(50% + 25px);
+            width: calc(100% - 50px);
+            height: 3px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+
+        .step-item.completed:not(:last-child)::after {
+            background: #27ae60;
+        }
+
+        .step-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .step-circle.pending {
+            background: #e2e8f0;
+            color: #718096;
+            border-color: #e2e8f0;
+        }
+
+        .step-circle.active {
+            background: #f51a2d;
+            color: white;
+            border-color: #f51a2d;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(245, 26, 45, 0.3);
+        }
+
+        .step-circle.completed {
+            background: #27ae60;
+            color: white;
+            border-color: #27ae60;
+        }
+
+        .step-label {
+            margin-top: 1rem;
+            font-weight: 600;
+            color: #2d3748;
+            text-align: center;
+            font-size: 0.9rem;
+            line-height: 1.3;
+        }
+
+        .step-item.completed .step-label {
+            color: #27ae60;
+        }
+
+        .step-item.active .step-label {
+            color: #f51a2d;
+        }
+
+        .step-item.pending .step-label {
+            color: #718096;
+        }
+
+        /* Form Container */
+        .form-container {
+            padding: 3rem;
+            min-height: 500px;
+        }
+
+        .step-content {
+            display: none;
+        }
+
+        .step-content.active {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .step-description {
+            color: #718096;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 0.9rem;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f7fafc;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #f51a2d;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(245, 26, 45, 0.1);
+        }
+
+        .form-input.error, .form-select.error, .form-textarea.error {
+            border-color: #e53e3e;
+            background: #fed7d7;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .file-upload-group {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border: 2px dashed #e2e8f0;
+            border-radius: 10px;
+            background: #f7fafc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #718096;
+        }
+
+        .file-upload-label:hover {
+            border-color: #f51a2d;
+            background: rgba(245, 26, 45, 0.05);
+            color: #f51a2d;
+        }
+
+        .file-upload-label i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .file-upload-input {
+            display: none;
+        }
+
+        .file-preview {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: #e6fffa;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #234e52;
+            display: none;
+        }
+
+        .file-preview.show {
+            display: block;
+        }
+
+        .error-message {
+            color: #e53e3e;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-message {
+            background: #c6f6d5;
+            color: #22543d;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* Navigation Buttons */
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f51a2d, #ff6806);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 26, 45, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #718096;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #f51a2d;
+            color: #f51a2d;
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* OTP Input */
+        .otp-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .otp-input {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: #f7fafc;
+            transition: all 0.3s ease;
+        }
+
+        .otp-input:focus {
+            outline: none;
+            border-color: #f51a2d;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(245, 26, 45, 0.1);
+        }
+
+        .otp-input.error {
+            border-color: #e53e3e;
+            background: #fed7d7;
+        }
+
+        /* Loading States */
+        .btn-loading {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn.loading .btn-text {
+            display: none;
+        }
+
+        .btn.loading .btn-loading {
+            display: flex;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .charity-registration-wrapper {
+                min-height: calc(100vh - 200px);
+                padding: 1rem 0;
+            }
+
+            .charity-container {
+                margin: 1rem;
+                border-radius: 15px;
+            }
+
+            .charity-header {
+                padding: 1.5rem;
+            }
+
+            .charity-title {
+                font-size: 2rem;
+            }
+
+            .step-progress {
+                padding: 1rem;
+                flex-direction: row;
+                gap: 1rem;
+                overflow-x: auto;
+            }
+
+            .step-item {
+                min-width: 120px;
+                flex: none;
+            }
+
+            .step-item:not(:last-child)::after {
+                display: none;
+            }
+
+            .step-circle {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .step-label {
+                margin-top: 0.5rem;
+                font-size: 0.8rem;
+            }
+
+            .form-container {
+                padding: 2rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .form-navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .otp-container {
+                gap: 0.5rem;
+            }
+
+            .otp-input {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Footer Styling for Charity Registration Page */
+        .footer {
+            background: #1a202c;
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 2rem;
+        }
+
+        .footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo p {
+            color: #a0aec0;
+            line-height: 1.6;
+        }
+
+        .footer-links h4,
+        .footer-contact h4 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a,
+        .footer-contact p {
+            color: #a0aec0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f51a2d;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #2d3748;
+            padding-top: 1rem;
+            text-align: center;
+            color: #a0aec0;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .footer {
+                padding: 2rem 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="resources/logo/Danna-logo.webp" alt="Daana.lk Logo" class="logo">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+                <li><a href="index.html#categories" class="nav-link">Categories</a></li>
+                <li><a href="index.html#causes" class="nav-link">Causes</a></li>
+                <li><a href="index.html#donate" class="nav-link">Donate</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                <li class="nav-auth">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Charity Registration Container -->
+    <div class="charity-registration-wrapper">
+        <div class="charity-container">
+            <!-- Header -->
+            <div class="charity-header">
+                <div class="charity-header-content">
+                    <div class="charity-logo">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h1 class="charity-title">Charity Registration</h1>
+                    <p class="charity-subtitle">Join Daana.lk as a charity organization and start making a difference</p>
+                </div>
+            </div>
+
+            <!-- Step Progress -->
+            <div class="step-progress">
+                <div class="step-item completed" id="step1-indicator">
+                    <div class="step-circle completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <span class="step-label">Basic Information</span>
+                </div>
+                <div class="step-item active" id="step2-indicator">
+                    <div class="step-circle active">2</div>
+                    <span class="step-label">Documents & Banking</span>
+                </div>
+                <div class="step-item pending" id="step3-indicator">
+                    <div class="step-circle pending">3</div>
+                    <span class="step-label">Email Verification</span>
+                </div>
+            </div>
+
+            <!-- Form Container -->
+            <div class="form-container">
+                <!-- Step 1: Basic Information -->
+                <div class="step-content active" id="step1">
+                    <h2 class="step-title">Basic Information</h2>
+                    <p class="step-description">Please provide your organization's basic details</p>
+                    
+                    <form id="step1Form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Organization Name *</label>
+                                <input type="text" id="name" name="name" class="form-input" required>
+                                <div class="error-message" id="nameError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                                <div class="error-message" id="emailError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="password" class="form-label">Password *</label>
+                                <input type="password" id="password" name="password" class="form-input" required>
+                                <div class="error-message" id="passwordError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="executionType" class="form-label">Organization Type *</label>
+                                <select id="executionType" name="executionType" class="form-select" required>
+                                    <option value="">Select Type</option>
+                                    <option value="ORGANIZATION">Organization</option>
+                                    <option value="PERSON">Individual Person</option>
+                                </select>
+                                <div class="error-message" id="executionTypeError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="website" class="form-label">Website</label>
+                                <input type="url" id="website" name="website" class="form-input" placeholder="https://example.com">
+                                <div class="error-message" id="websiteError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="mobileNumber" class="form-label">Mobile Number *</label>
+                                <input type="tel" id="mobileNumber" name="mobileNumber" class="form-input" required>
+                                <div class="error-message" id="mobileNumberError"></div>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="description" class="form-label">Organization Description *</label>
+                                <textarea id="description" name="description" class="form-textarea" required placeholder="Describe your organization's mission and activities"></textarea>
+                                <div class="error-message" id="descriptionError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="nicNumberOrRegistrationNumber" class="form-label">Registration Number *</label>
+                                <input type="text" id="nicNumberOrRegistrationNumber" name="nicNumberOrRegistrationNumber" class="form-input" required>
+                                <div class="error-message" id="nicNumberOrRegistrationNumberError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contactPersonName" class="form-label">Contact Person Name *</label>
+                                <input type="text" id="contactPersonName" name="contactPersonName" class="form-input" required>
+                                <div class="error-message" id="contactPersonNameError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contactPersonMobile" class="form-label">Contact Person Mobile *</label>
+                                <input type="tel" id="contactPersonMobile" name="contactPersonMobile" class="form-input" required>
+                                <div class="error-message" id="contactPersonMobileError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contactPersonEmail" class="form-label">Contact Person Email *</label>
+                                <input type="email" id="contactPersonEmail" name="contactPersonEmail" class="form-input" required>
+                                <div class="error-message" id="contactPersonEmailError"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2: Documents & Banking -->
+                <div class="step-content" id="step2">
+                    <h2 class="step-title">Documents & Banking Information</h2>
+                    <p class="step-description">Upload required documents and provide banking details</p>
+                    
+                    <form id="step2Form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="documentType" class="form-label">Document Type *</label>
+                                <select id="documentType" name="documentType" class="form-select" required>
+                                    <option value="">Select Document Type</option>
+                                    <option value="BUSINESS_REGISTRATION_CERTIFICATE">Business Registration Certificate</option>
+                                    <option value="ID_CARD">ID Card</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                                <div class="error-message" id="documentTypeError"></div>
+                                <small style="color: #718096; font-size: 0.8rem; margin-top: 0.25rem; display: block;" id="documentTypeHelp">
+                                    Select the appropriate document type based on your organization type
+                                </small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Document File *</label>
+                                <div class="file-upload-group">
+                                    <label for="documentFile" class="file-upload-label">
+                                        <i class="fas fa-upload"></i>
+                                        Choose Document File
+                                    </label>
+                                    <input type="file" id="documentFile" name="documentFile" class="file-upload-input" accept=".pdf,.jpg,.jpeg,.png" required>
+                                    <div class="file-preview" id="documentFilePreview"></div>
+                                </div>
+                                <div class="error-message" id="documentFileError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Organization Logo</label>
+                                <div class="file-upload-group">
+                                    <label for="logoFile" class="file-upload-label">
+                                        <i class="fas fa-image"></i>
+                                        Choose Logo File
+                                    </label>
+                                    <input type="file" id="logoFile" name="logoFile" class="file-upload-input" accept=".jpg,.jpeg,.png,.webp">
+                                    <div class="file-preview" id="logoFilePreview"></div>
+                                </div>
+                                <div class="error-message" id="logoFileError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="bankName" class="form-label">Bank Name *</label>
+                                <input type="text" id="bankName" name="bankName" class="form-input" required>
+                                <div class="error-message" id="bankNameError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="branchName" class="form-label">Branch Name *</label>
+                                <input type="text" id="branchName" name="branchName" class="form-input" required>
+                                <div class="error-message" id="branchNameError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="accountHolderName" class="form-label">Account Holder Name *</label>
+                                <input type="text" id="accountHolderName" name="accountHolderName" class="form-input" required>
+                                <div class="error-message" id="accountHolderNameError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="swiftCode" class="form-label">SWIFT Code *</label>
+                                <input type="text" id="swiftCode" name="swiftCode" class="form-input" required>
+                                <div class="error-message" id="swiftCodeError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="accountNumber" class="form-label">Account Number *</label>
+                                <input type="text" id="accountNumber" name="accountNumber" class="form-input" required>
+                                <div class="error-message" id="accountNumberError"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 3: Email Verification -->
+                <div class="step-content" id="step3">
+                    <h2 class="step-title">Email Verification</h2>
+                    <p class="step-description">Please enter the OTP code sent to your email address</p>
+                    
+                    <form id="step3Form">
+                        <div class="otp-container">
+                            <input type="text" class="otp-input" maxlength="1" data-index="0">
+                            <input type="text" class="otp-input" maxlength="1" data-index="1">
+                            <input type="text" class="otp-input" maxlength="1" data-index="2">
+                            <input type="text" class="otp-input" maxlength="1" data-index="3">
+                            <input type="text" class="otp-input" maxlength="1" data-index="4">
+                            <input type="text" class="otp-input" maxlength="1" data-index="5">
+                        </div>
+                        <div class="error-message" id="otpError"></div>
+                        
+                        <div style="text-align: center; margin: 2rem 0;">
+                            <p style="color: #718096; margin-bottom: 1rem;">Didn't receive the code?</p>
+                            <button type="button" id="resendOtpBtn" class="btn btn-secondary">Resend OTP</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Success Message -->
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="successText"></span>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="form-navigation">
+                    <button type="button" id="prevBtn" class="btn btn-secondary" style="display: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        Previous
+                    </button>
+                    
+                    <div style="flex: 1;"></div>
+                    
+                    <button type="button" id="nextBtn" class="btn btn-primary">
+                        <span class="btn-text">Next Step</span>
+                        <span class="btn-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Processing...
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="resources/logo/Danna-logo.webp" alt="Daana.lk Logo" class="logo">
+                    <p>Making a difference in Sri Lanka through compassionate giving</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#causes">Causes</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> info@daana.lk</p>
+                    <p><i class="fas fa-phone"></i> +94 11 234 5678</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Daana.lk. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="api-service.js"></script>
+    <script src="auth.js"></script>
+    <script src="charity-registration.js"></script>
+</body>
+</html>

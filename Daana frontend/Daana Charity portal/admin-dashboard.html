@@ -1,0 +1,2990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Daana.lk</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="admin-dashboard.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="resources/logo/Danna-logo.webp" alt="Daana Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <i class="fas fa-heart" style="display: none; font-size: 25px; color: #f51a2d;"></i>
+                </div>
+                <div class="sidebar-title">Daana.lk</div>
+                <div class="sidebar-subtitle">Charity Admin Portal</div>
+            </div>
+
+            <div class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a href="#" class="nav-item active" data-page="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                    <a href="#" class="nav-item" data-page="donations">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        Donations
+                    </a>
+                    <a href="#" class="nav-item" data-page="campaigns">
+                        <i class="fas fa-bullhorn"></i>
+                        Campaigns
+                    </a>
+                    <a href="#" class="nav-item" data-page="beneficiaries">
+                        <i class="fas fa-users"></i>
+                        Beneficiaries
+                    </a>
+                    <a href="#" class="nav-item" data-page="profile">
+                        <i class="fas fa-user-cog"></i>
+                        Profile
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <a href="#" class="nav-item" data-page="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        Reports
+                    </a>
+                    <a href="#" class="nav-item" data-page="volunteers">
+                        <i class="fas fa-user-friends"></i>
+                        Volunteers
+                    </a>
+                    <a href="#" class="nav-item" data-page="inventory">
+                        <i class="fas fa-boxes"></i>
+                        Inventory
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Settings</div>
+                    <a href="#" class="nav-item" data-page="profile">
+                        <i class="fas fa-user-cog"></i>
+                        Profile Settings
+                    </a>
+                    <a href="#" class="nav-item" data-page="notifications">
+                        <i class="fas fa-bell"></i>
+                        Notifications
+                    </a>
+                    <a href="#" class="nav-item" data-page="security">
+                        <i class="fas fa-shield-alt"></i>
+                        Security
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="top-bar-right">
+                    <div class="user-profile" id="userProfile">
+                        <div class="user-avatar" id="userAvatar">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                        <div class="user-info">
+                            <div class="user-name" id="userName">Loading...</div>
+                            <div class="user-role" id="userRole">Charity Admin</div>
+                        </div>
+                    </div>
+                    <button class="logout-btn" id="logoutBtn" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Dashboard Content -->
+                <div id="dashboardContent">
+                    <div class="dashboard-welcome">
+                        <div class="welcome-content">
+                            <div class="welcome-text">
+                                <h2 class="welcome-title">Welcome back!</h2>
+                                <p class="welcome-subtitle" id="welcomeMessage">Ready to make a difference in Sri Lanka</p>
+                            </div>
+                            <button class="btn btn-outline" id="refreshDashboardBtn" title="Refresh Dashboard">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Total Donations</div>
+                                <div class="stat-icon" style="background: #28a745;">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value">₨ 2,450,000</div>
+                            <div class="stat-change">+12% this month</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Active Campaigns</div>
+                                <div class="stat-icon" style="background: #17a2b8;">
+                                    <i class="fas fa-bullhorn"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value">8</div>
+                            <div class="stat-change">3 new this week</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Beneficiaries</div>
+                                <div class="stat-icon" style="background: #ffc107;">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value">1,247</div>
+                            <div class="stat-change">+5% this month</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Volunteers</div>
+                                <div class="stat-icon" style="background: #6f42c1;">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value">156</div>
+                            <div class="stat-change">+8 new this week</div>
+                        </div>
+                    </div>
+
+                    <div class="content-placeholder">
+                        <div class="placeholder-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Dashboard Analytics</h3>
+                        <p>Detailed analytics and charts will be displayed here</p>
+                    </div>
+                </div>
+
+                <!-- Campaigns Content -->
+                <div id="campaignsContent" style="display: none;">
+                    <div class="campaigns-header">
+                        <div class="campaigns-title-section">
+                            <h2 class="campaigns-title">Charity Campaigns</h2>
+                            <p class="campaigns-subtitle">Manage and monitor all charity programs</p>
+                        </div>
+                        <div class="campaigns-actions">
+                            <button class="btn btn-success" id="createCampaignBtn">
+                                <i class="fas fa-plus"></i> Create Campaign
+                            </button>
+                            <button class="btn btn-primary" id="refreshCampaigns">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="campaigns-filters">
+                        <div class="filter-group">
+                            <label for="statusFilter">Status:</label>
+                            <select id="statusFilter" class="filter-select">
+                                <option value="">All Status</option>
+                                <option value="ACTIVE">Active</option>
+                                <option value="INACTIVE">Inactive</option>
+                                <option value="COMPLETED">Completed</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="categoryFilter">Category:</label>
+                            <select id="categoryFilter" class="filter-select">
+                                <option value="">All Categories</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="searchCampaigns">Search:</label>
+                            <input type="text" id="searchCampaigns" class="filter-input" placeholder="Search campaigns...">
+                        </div>
+                    </div>
+
+                    <div class="campaigns-loading" id="campaignsLoading" style="display: none;">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>Loading campaigns...</span>
+                        </div>
+                    </div>
+
+                    <div class="campaigns-grid" id="campaignsGrid">
+                        <!-- Campaigns will be loaded here -->
+                    </div>
+
+                    <div class="pagination-container" id="paginationContainer">
+                        <div class="pagination-info">
+                            <span id="paginationInfo">Showing 0 of 0 campaigns</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="pagination-btn" id="prevPage" disabled>
+                                <i class="fas fa-chevron-left"></i> Previous
+                            </button>
+                            <div class="pagination-pages" id="paginationPages">
+                                <!-- Page numbers will be generated here -->
+                            </div>
+                            <button class="pagination-btn" id="nextPage" disabled>
+                                Next <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Donations Content -->
+                <div id="donationsContent" style="display: none;">
+                    <div class="donations-header">
+                        <div class="donations-title-section">
+                            <h2 class="donations-title">Donations</h2>
+                            <p class="donations-subtitle">View and manage all donations received</p>
+                        </div>
+                        <div class="donations-actions">
+                            <button class="btn btn-primary" id="refreshDonations">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="donations-filters">
+                        <div class="filter-group">
+                            <label for="startDateFilter">Start Date:</label>
+                            <input type="date" id="startDateFilter" class="filter-input">
+                        </div>
+                        <div class="filter-group">
+                            <label for="endDateFilter">End Date:</label>
+                            <input type="date" id="endDateFilter" class="filter-input">
+                        </div>
+                        <div class="filter-group">
+                            <label for="anonymousFilter">Anonymous:</label>
+                            <select id="anonymousFilter" class="filter-select">
+                                <option value="">All Donations</option>
+                                <option value="false">Named Donations</option>
+                                <option value="true">Anonymous Donations</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="searchDonations">Search:</label>
+                            <input type="text" id="searchDonations" class="filter-input" placeholder="Search donations...">
+                        </div>
+                    </div>
+
+                    <div class="donations-loading" id="donationsLoading" style="display: none;">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>Loading donations...</span>
+                        </div>
+                    </div>
+
+                    <div class="donations-list" id="donationsList">
+                        <!-- Donations will be loaded here -->
+                    </div>
+
+                    <div class="pagination-container" id="donationsPaginationContainer">
+                        <div class="pagination-info">
+                            <span id="donationsPaginationInfo">Showing 0 of 0 donations</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="pagination-btn" id="donationsPrevPage" disabled>
+                                <i class="fas fa-chevron-left"></i> Previous
+                            </button>
+                            <div class="pagination-pages" id="donationsPaginationPages">
+                                <!-- Page numbers will be generated here -->
+                            </div>
+                            <button class="pagination-btn" id="donationsNextPage" disabled>
+                                Next <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Content -->
+                <div id="profileContent" style="display: none;">
+                    <div class="profile-header">
+                        <div class="profile-title-section">
+                            <h2 class="profile-title">Charity Profile</h2>
+                            <p class="profile-subtitle">Manage your charity organization information</p>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="btn btn-primary" id="editProfileBtn">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </button>
+                            <button class="btn btn-outline" id="changePasswordBtn">
+                                <i class="fas fa-key"></i> Change Password
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="profile-loading" id="profileLoading" style="display: none;">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>Loading profile...</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-content" id="profileContentData">
+                        <!-- Profile data will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Other page content will be loaded here -->
+                <div id="dynamicContent" style="display: none;">
+                    <div class="content-placeholder">
+                        <div class="placeholder-icon">
+                            <i class="fas fa-cog fa-spin"></i>
+                        </div>
+                        <h3>Page Under Development</h3>
+                        <p>This feature is coming soon...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Campaign Details Modal -->
+    <div id="campaignDetailsModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">Campaign Details</h2>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-content" id="modalContent">
+                <!-- Content will be loaded dynamically -->
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="closeModalBtn">
+                    <i class="fas fa-times"></i> Close
+                </button>
+                <button class="btn btn-danger" id="deleteCampaignBtn">
+                    <i class="fas fa-trash"></i> Delete Campaign
+                </button>
+                <button class="btn btn-primary" id="editCampaignBtn">
+                    <i class="fas fa-edit"></i> Edit Campaign
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Campaign Modal -->
+    <div id="createCampaignModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container modal-large">
+            <div class="modal-header">
+                <h2 class="modal-title">Create New Campaign</h2>
+                <button class="modal-close" id="closeCreateModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="createCampaignForm" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <div class="form-section">
+                        <h3><i class="fas fa-info-circle"></i> Campaign Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="programName">Program Name *</label>
+                                <input type="text" id="programName" name="programName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Campaign Title *</label>
+                                <input type="text" id="title" name="title" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="description">Description *</label>
+                                <textarea id="description" name="description" rows="4" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="programLocation">Location *</label>
+                                <input type="text" id="programLocation" name="programLocation" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subCategoryId">Category *</label>
+                                <select id="subCategoryId" name="subCategoryId" required>
+                                    <option value="">Select Category</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-dollar-sign"></i> Financial Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="targetDonationAmount">Target Amount (LKR) *</label>
+                                <input type="number" id="targetDonationAmount" name="targetDonationAmount" step="0.01" min="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="raised">Already Raised (LKR)</label>
+                                <input type="number" id="raised" name="raised" step="0.01" min="0" value="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-calendar"></i> Timeline</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="startDate">Start Date</label>
+                                <input type="date" id="startDate" name="startDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="endDate">End Date</label>
+                                <input type="date" id="endDate" name="endDate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-user"></i> Contact Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="contactPersonName">Contact Person Name *</label>
+                                <input type="text" id="contactPersonName" name="contactPersonName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPersonEmail">Contact Email *</label>
+                                <input type="email" id="contactPersonEmail" name="contactPersonEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPersonMobile">Contact Mobile *</label>
+                                <input type="tel" id="contactPersonMobile" name="contactPersonMobile" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-images"></i> Media Files</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="programImage">Campaign Image</label>
+                                <input type="file" id="programImage" name="programImage" accept="image/*">
+                                <small class="form-help">Optional - JPG, PNG, WEBP formats supported</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="programVideo">Campaign Video</label>
+                                <input type="file" id="programVideo" name="programVideo" accept="video/*">
+                                <small class="form-help">Optional - MP4, AVI, MOV formats supported</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-file-alt"></i> Related Documents</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="relatedDocument1" id="relatedDocument1Label">Document 1 *</label>
+                                <input type="file" id="relatedDocument1" name="relatedDocument1" accept=".pdf,.doc,.docx" required>
+                                <small class="form-help" id="relatedDocument1Help">Required for new campaigns - PDF, DOC, DOCX formats supported</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="relatedDocument2">Document 2</label>
+                                <input type="file" id="relatedDocument2" name="relatedDocument2" accept=".pdf,.doc,.docx">
+                                <small class="form-help">Optional - PDF, DOC, DOCX formats supported</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="relatedDocument3">Document 3</label>
+                                <input type="file" id="relatedDocument3" name="relatedDocument3" accept=".pdf,.doc,.docx">
+                                <small class="form-help">Optional - PDF, DOC, DOCX formats supported</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="cancelCreateBtn">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-success" id="submitCreateBtn">
+                        <i class="fas fa-plus"></i> Create Campaign
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Donation Details Modal -->
+    <div id="donationDetailsModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">Donation Details</h2>
+                <button class="modal-close" id="closeDonationModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-content" id="donationModalContent">
+                <!-- Content will be loaded dynamically -->
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="closeDonationModalBtn">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Edit Modal -->
+    <div id="profileEditModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container modal-large">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit Profile</h2>
+                <button class="modal-close" id="closeProfileEditModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="profileEditForm">
+                <div class="modal-content">
+                    <div class="form-section">
+                        <h3><i class="fas fa-building"></i> Organization Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="profileName">Organization Name *</label>
+                                <input type="text" id="profileName" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileEmail">Email *</label>
+                                <input type="email" id="profileEmail" name="email" required readonly>
+                                <div class="form-help">Email cannot be changed</div>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="profileDescription">Description *</label>
+                                <textarea id="profileDescription" name="description" rows="4" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileWebsite">Website</label>
+                                <input type="url" id="profileWebsite" name="website">
+                            </div>
+                            <div class="form-group">
+                                <label for="profilePhone">Phone Number</label>
+                                <input type="tel" id="profilePhone" name="phoneNumber">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-user"></i> Contact Person Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="contactPersonName">Contact Person Name *</label>
+                                <input type="text" id="contactPersonName" name="contactPersonName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPersonMobile">Contact Person Mobile *</label>
+                                <input type="tel" id="contactPersonMobile" name="contactPersonMobile" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPersonEmail">Contact Person Email</label>
+                                <input type="email" id="contactPersonEmail" name="contactPersonEmail">
+                            </div>
+                            <div class="form-group">
+                                <label for="nicOrRegNumber">NIC/Registration Number *</label>
+                                <input type="text" id="nicOrRegNumber" name="nicNumberOrRegistrationNumber" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="cancelProfileEditBtn">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-success" id="submitProfileEditBtn">
+                        <i class="fas fa-save"></i> Update Profile
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Password Change Modal -->
+    <div id="passwordChangeModal" class="modal-overlay" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">Change Password</h2>
+                <button class="modal-close" id="closePasswordModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="passwordChangeForm">
+                <div class="modal-content">
+                    <div class="form-section">
+                        <h3><i class="fas fa-lock"></i> Password Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password *</label>
+                                <input type="password" id="currentPassword" name="currentPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password *</label>
+                                <input type="password" id="newPassword" name="newPassword" required minlength="8">
+                                <div class="form-help">Password must be at least 8 characters long</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm New Password *</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="cancelPasswordBtn">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-success" id="submitPasswordBtn">
+                        <i class="fas fa-key"></i> Change Password
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Login Manager Class
+        class LoginManager {
+            constructor() {
+                this.apiBase = 'http://localhost:8080/api/v1/auth/charity';
+            }
+
+            async login(email, password) {
+                try {
+                    const response = await fetch(`${this.apiBase}/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Store tokens and user data
+                        localStorage.setItem('authToken', data.body.authToken);
+                        localStorage.setItem('refreshToken', data.body.refreshToken);
+                        localStorage.setItem('userData', JSON.stringify(data.body.userData));
+                        
+                        return { success: true, data: data.body };
+                    } else {
+                        return { success: false, message: data.message };
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    return { success: false, message: 'Network error occurred' };
+                }
+            }
+
+            logout() {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('refreshToken');
+                localStorage.removeItem('userData');
+                window.location.href = 'login.html';
+            }
+
+            isLoggedIn() {
+                return !!localStorage.getItem('authToken');
+            }
+
+            getUserData() {
+                const userData = localStorage.getItem('userData');
+                return userData ? JSON.parse(userData) : null;
+            }
+        }
+
+        // Admin Dashboard Class
+        class AdminDashboard {
+            constructor() {
+                this.currentPage = 'dashboard';
+                this.campaignsData = [];
+                this.donationsData = [];
+                this.profileData = null;
+                this.currentPage = 0;
+                this.donationsCurrentPage = 0;
+                this.pageSize = 10;
+                this.donationsPageSize = 15;
+                this.totalPages = 0;
+                this.donationsTotalPages = 0;
+                this.totalElements = 0;
+                this.donationsTotalElements = 0;
+                this.apiBase = 'http://localhost:8080/api/v1/charity';
+                this.currentCampaignId = null;
+                this.currentCampaignData = null;
+                this.currentEditCampaignId = null;
+                this.currentEditSubCategoryId = null;
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.setupCampaignsEvents();
+                this.setupDonationsEvents();
+                this.setupProfileEvents();
+                this.setupModalEvents();
+                this.loadUserData();
+                this.setupNavigation();
+                this.loadDashboardStats();
+            }
+
+            setupEventListeners() {
+                // Menu toggle
+                const menuToggle = document.getElementById('menuToggle');
+                if (menuToggle) {
+                    menuToggle.addEventListener('click', () => {
+                        const sidebar = document.getElementById('sidebar');
+                        sidebar.classList.toggle('open');
+                    });
+                }
+
+                // Logout button
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', () => {
+                        if (confirm('Are you sure you want to logout?')) {
+                            const loginManager = new LoginManager();
+                            loginManager.logout();
+                        }
+                    });
+                }
+
+                // Refresh dashboard button
+                const refreshDashboardBtn = document.getElementById('refreshDashboardBtn');
+                if (refreshDashboardBtn) {
+                    refreshDashboardBtn.addEventListener('click', () => {
+                        this.loadDashboardStats();
+                    });
+                }
+            }
+
+            setupNavigation() {
+                const navItems = document.querySelectorAll('.nav-item');
+                navItems.forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const page = item.getAttribute('data-page');
+                        this.navigateToPage(page);
+                    });
+                });
+            }
+
+            navigateToPage(page) {
+                // Update active nav item
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.querySelector(`[data-page="${page}"]`).classList.add('active');
+
+                // Update page title
+                const pageTitle = document.getElementById('pageTitle');
+                if (pageTitle) {
+                    pageTitle.textContent = page.charAt(0).toUpperCase() + page.slice(1);
+                }
+
+                // Hide all content sections
+                document.getElementById('dashboardContent').style.display = 'none';
+                document.getElementById('campaignsContent').style.display = 'none';
+                document.getElementById('donationsContent').style.display = 'none';
+                document.getElementById('profileContent').style.display = 'none';
+                document.getElementById('dynamicContent').style.display = 'none';
+
+                // Show selected content
+                if (page === 'dashboard') {
+                    document.getElementById('dashboardContent').style.display = 'block';
+                } else if (page === 'campaigns') {
+                    document.getElementById('campaignsContent').style.display = 'block';
+                    this.loadCampaigns();
+                } else if (page === 'donations') {
+                    document.getElementById('donationsContent').style.display = 'block';
+                    this.loadDonations();
+                } else if (page === 'profile') {
+                    document.getElementById('profileContent').style.display = 'block';
+                    this.loadProfile();
+                } else {
+                    document.getElementById('dynamicContent').style.display = 'block';
+                }
+
+                this.currentPage = page;
+            }
+
+            loadUserData() {
+                const loginManager = new LoginManager();
+                const userData = loginManager.getUserData();
+                
+                if (userData) {
+                    const userName = document.getElementById('userName');
+                    const userAvatar = document.getElementById('userAvatar');
+                    
+                    if (userName) {
+                        userName.textContent = userData.name || userData.email || 'User';
+                    }
+                    
+                    if (userAvatar) {
+                        if (userData.profileImage) {
+                            userAvatar.innerHTML = `<img src="${userData.profileImage}" alt="Profile">`;
+                        } else {
+                            const initials = (userData.name || userData.email || 'U').charAt(0).toUpperCase();
+                            userAvatar.textContent = initials;
+                        }
+                    }
+                }
+            }
+
+            async loadDashboardStats() {
+                try {
+                    const token = localStorage.getItem('authToken');
+                    if (!token) {
+                        console.error('No authentication token found');
+                        return;
+                    }
+
+                    const response = await fetch(`${this.apiBase}/programs/dashboard/stats`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        }
+                    });
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.updateDashboardStats(data.body);
+                    } else {
+                        console.error('Failed to load dashboard stats:', data.message);
+                    }
+                } catch (error) {
+                    console.error('Error loading dashboard stats:', error);
+                }
+            }
+
+            updateDashboardStats(stats) {
+                // Update stat cards
+                this.updateStatCard('totalDonations', this.formatCurrency(stats.totalRaised));
+                this.updateStatCard('activeCampaigns', stats.activePrograms.toString());
+                this.updateStatCard('beneficiaries', stats.totalPrograms.toString());
+                this.updateStatCard('volunteers', stats.totalDonations.toString());
+
+                // Update stat card labels and descriptions
+                this.updateStatCardLabel('totalDonations', 'Total Raised');
+                this.updateStatCardLabel('activeCampaigns', 'Active Programs');
+                this.updateStatCardLabel('beneficiaries', 'Total Programs');
+                this.updateStatCardLabel('volunteers', 'Total Donations');
+
+                // Update stat card changes
+                this.updateStatCardChange('totalDonations', `Target: ${this.formatCurrency(stats.totalTargetAmount)}`);
+                this.updateStatCardChange('activeCampaigns', `${stats.pendingPrograms} pending, ${stats.draftPrograms} draft`);
+                this.updateStatCardChange('beneficiaries', `${stats.rejectedPrograms} rejected`);
+                this.updateStatCardChange('volunteers', `Avg: ${this.formatCurrency(stats.averageDonationAmount)}`);
+
+                // Update recent programs section
+                this.updateRecentPrograms(stats.recentPrograms);
+                this.updateTopPerformingPrograms(stats.topPerformingPrograms);
+            }
+
+            updateStatCard(cardId, value) {
+                const card = document.querySelector(`.stat-card:nth-child(${this.getStatCardIndex(cardId)}) .stat-value`);
+                if (card) {
+                    card.textContent = value;
+                }
+            }
+
+            updateStatCardLabel(cardId, label) {
+                const card = document.querySelector(`.stat-card:nth-child(${this.getStatCardIndex(cardId)}) .stat-title`);
+                if (card) {
+                    card.textContent = label;
+                }
+            }
+
+            updateStatCardChange(cardId, change) {
+                const card = document.querySelector(`.stat-card:nth-child(${this.getStatCardIndex(cardId)}) .stat-change`);
+                if (card) {
+                    card.textContent = change;
+                }
+            }
+
+            getStatCardIndex(cardId) {
+                const mapping = {
+                    'totalDonations': 1,
+                    'activeCampaigns': 2,
+                    'beneficiaries': 3,
+                    'volunteers': 4
+                };
+                return mapping[cardId] || 1;
+            }
+
+            updateRecentPrograms(programs) {
+                const placeholder = document.querySelector('.content-placeholder');
+                if (placeholder && programs && programs.length > 0) {
+                    placeholder.innerHTML = `
+                        <div class="dashboard-section">
+                            <h3><i class="fas fa-clock"></i> Recent Programs</h3>
+                            <div class="recent-programs-list">
+                                ${programs.map(program => `
+                                    <div class="recent-program-item">
+                                        <div class="program-info">
+                                            <h4>${program.title}</h4>
+                                            <p>${program.programName}</p>
+                                            <span class="program-status status-${program.status.toLowerCase()}">${program.status}</span>
+                                        </div>
+                                        <div class="program-stats">
+                                            <div class="program-raised">${this.formatCurrency(program.raised)}</div>
+                                            <div class="program-target">Target: ${this.formatCurrency(program.targetAmount)}</div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            updateTopPerformingPrograms(programs) {
+                const placeholder = document.querySelector('.content-placeholder');
+                if (placeholder && programs && programs.length > 0) {
+                    const existingContent = placeholder.innerHTML;
+                    placeholder.innerHTML = existingContent + `
+                        <div class="dashboard-section">
+                            <h3><i class="fas fa-trophy"></i> Top Performing Programs</h3>
+                            <div class="top-programs-list">
+                                ${programs.map(program => `
+                                    <div class="top-program-item">
+                                        <div class="program-info">
+                                            <h4>${program.title}</h4>
+                                            <p>${program.programName}</p>
+                                        </div>
+                                        <div class="program-performance">
+                                            <div class="completion-bar">
+                                                <div class="completion-fill" style="width: ${Math.min(program.completionPercentage, 100)}%"></div>
+                                            </div>
+                                            <div class="completion-text">${program.completionPercentage.toFixed(1)}% Complete</div>
+                                            <div class="program-raised">${this.formatCurrency(program.raised)} / ${this.formatCurrency(program.targetAmount)}</div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            setupCampaignsEvents() {
+                // Create campaign button
+                const createBtn = document.getElementById('createCampaignBtn');
+                if (createBtn) {
+                    createBtn.addEventListener('click', () => {
+                        this.openCreateCampaignModal();
+                    });
+                }
+
+                // Refresh campaigns button
+                const refreshBtn = document.getElementById('refreshCampaigns');
+                if (refreshBtn) {
+                    refreshBtn.addEventListener('click', () => {
+                        this.loadCampaigns();
+                    });
+                }
+
+                // Status filter
+                const statusFilter = document.getElementById('statusFilter');
+                if (statusFilter) {
+                    statusFilter.addEventListener('change', () => {
+                        this.applyFilters();
+                    });
+                }
+
+                // Category filter
+                const categoryFilter = document.getElementById('categoryFilter');
+                if (categoryFilter) {
+                    categoryFilter.addEventListener('change', () => {
+                        this.applyFilters();
+                    });
+                }
+
+                // Search input
+                const searchInput = document.getElementById('searchCampaigns');
+                if (searchInput) {
+                    searchInput.addEventListener('input', this.debounce(() => {
+                        this.applyFilters();
+                    }, 300));
+                }
+
+                // Pagination buttons
+                const prevBtn = document.getElementById('prevPage');
+                const nextBtn = document.getElementById('nextPage');
+                
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        if (this.currentPage > 0) {
+                            this.goToPage(this.currentPage - 1);
+                        }
+                    });
+                }
+                
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        if (this.currentPage < this.totalPages - 1) {
+                            this.goToPage(this.currentPage + 1);
+                        }
+                    });
+                }
+            }
+
+            setupDonationsEvents() {
+                // Refresh donations button
+                const refreshBtn = document.getElementById('refreshDonations');
+                if (refreshBtn) {
+                    refreshBtn.addEventListener('click', () => {
+                        this.loadDonations();
+                    });
+                }
+
+                // Date filters
+                const startDateFilter = document.getElementById('startDateFilter');
+                const endDateFilter = document.getElementById('endDateFilter');
+                
+                if (startDateFilter) {
+                    startDateFilter.addEventListener('change', () => {
+                        this.applyDonationsFilters();
+                    });
+                }
+                
+                if (endDateFilter) {
+                    endDateFilter.addEventListener('change', () => {
+                        this.applyDonationsFilters();
+                    });
+                }
+
+                // Anonymous filter
+                const anonymousFilter = document.getElementById('anonymousFilter');
+                if (anonymousFilter) {
+                    anonymousFilter.addEventListener('change', () => {
+                        this.applyDonationsFilters();
+                    });
+                }
+
+                // Search input
+                const searchInput = document.getElementById('searchDonations');
+                if (searchInput) {
+                    searchInput.addEventListener('input', this.debounce(() => {
+                        this.applyDonationsFilters();
+                    }, 300));
+                }
+
+                // Pagination buttons
+                const prevBtn = document.getElementById('donationsPrevPage');
+                const nextBtn = document.getElementById('donationsNextPage');
+                
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        if (this.donationsCurrentPage > 0) {
+                            this.goToDonationsPage(this.donationsCurrentPage - 1);
+                        }
+                    });
+                }
+                
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        if (this.donationsCurrentPage < this.donationsTotalPages - 1) {
+                            this.goToDonationsPage(this.donationsCurrentPage + 1);
+                        }
+                    });
+                }
+            }
+
+            setupProfileEvents() {
+                // Edit profile button
+                const editProfileBtn = document.getElementById('editProfileBtn');
+                if (editProfileBtn) {
+                    editProfileBtn.addEventListener('click', () => {
+                        this.openProfileEditModal();
+                    });
+                }
+
+                // Change password button
+                const changePasswordBtn = document.getElementById('changePasswordBtn');
+                if (changePasswordBtn) {
+                    changePasswordBtn.addEventListener('click', () => {
+                        this.openPasswordChangeModal();
+                    });
+                }
+            }
+
+            async loadCampaigns() {
+                try {
+                    const loadingElement = document.getElementById('campaignsLoading');
+                    const campaignsGrid = document.getElementById('campaignsGrid');
+                    
+                    if (loadingElement) loadingElement.style.display = 'block';
+                    if (campaignsGrid) campaignsGrid.innerHTML = '';
+
+                    const token = localStorage.getItem('authToken');
+                    if (!token) {
+                        throw new Error('No authentication token found');
+                    }
+
+                    const url = `${this.apiBase}/programs/list?page=${this.currentPage}&size=${this.pageSize}`;
+                    const response = await fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
+                            'Accept': 'application/json',
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache'
+                        },
+                        mode: 'cors',
+                        credentials: 'omit'
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.campaignsData = data.body.content || [];
+                        this.totalPages = data.body.totalPages || 0;
+                        this.totalElements = data.body.totalElements || 0;
+                        
+                        this.displayCampaigns(this.campaignsData);
+                        this.updatePagination();
+                        this.populateCategoryFilter(this.campaignsData);
+                    } else {
+                        throw new Error(data.message || 'Failed to load campaigns');
+                    }
+                } catch (error) {
+                    console.error('Error loading campaigns:', error);
+                    this.showCampaignsError(`Failed to load campaigns: ${error.message}`);
+                } finally {
+                    const loadingElement = document.getElementById('campaignsLoading');
+                    if (loadingElement) loadingElement.style.display = 'none';
+                }
+            }
+
+            displayCampaigns(campaigns) {
+                const campaignsGrid = document.getElementById('campaignsGrid');
+                if (!campaignsGrid) return;
+
+                if (campaigns.length === 0) {
+                    campaignsGrid.innerHTML = `
+                        <div class="campaigns-empty">
+                            <i class="fas fa-inbox"></i>
+                            <h3>No campaigns found</h3>
+                            <p>No campaigns match your current filters.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                campaignsGrid.innerHTML = campaigns.map(campaign => this.createCampaignCard(campaign)).join('');
+            }
+
+            createCampaignCard(campaign) {
+                const progressPercentage = Math.min((campaign.raised / campaign.targetDonationAmount) * 100, 100);
+                const formattedRaised = this.formatCurrency(campaign.raised);
+                const formattedTarget = this.formatCurrency(campaign.targetDonationAmount);
+                
+                return `
+                    <div class="campaign-card" onclick="window.dashboard.viewCampaignDetails(${campaign.id})">
+                        <img src="${campaign.programImage}" alt="${campaign.title}" class="campaign-image" onerror="this.style.display='none';">
+                        <div class="campaign-content">
+                            <div class="campaign-header">
+                                <h3 class="campaign-title">${campaign.title}</h3>
+                                <span class="campaign-status status-${campaign.status.toLowerCase()}">${campaign.status}</span>
+                            </div>
+                            <div class="campaign-category">${campaign.subCategoryName}</div>
+                            <p class="campaign-description">${campaign.programName}</p>
+                            
+                            <div class="campaign-progress">
+                                <div class="progress-header">
+                                    <span class="progress-label">Progress</span>
+                                    <span class="progress-percentage">${progressPercentage.toFixed(1)}%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${progressPercentage}%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="campaign-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">${formattedRaised}</div>
+                                    <div class="stat-label">Raised</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">${formattedTarget}</div>
+                                    <div class="stat-label">Target</div>
+                                </div>
+                            </div>
+                            
+                            <div class="campaign-actions">
+                                <button class="btn btn-sm btn-outline" onclick="event.stopPropagation(); window.dashboard.viewCampaignDetails(${campaign.id})">
+                                    <i class="fas fa-eye"></i> View Details
+                                </button>
+                                <button class="btn btn-sm btn-primary" onclick="event.stopPropagation(); window.dashboard.editCampaign(${campaign.id})">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="event.stopPropagation(); window.dashboard.deleteCampaign(${campaign.id}, '${campaign.title}')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            updatePagination() {
+                const paginationInfo = document.getElementById('paginationInfo');
+                const prevBtn = document.getElementById('prevPage');
+                const nextBtn = document.getElementById('nextPage');
+                const paginationPages = document.getElementById('paginationPages');
+                
+                if (paginationInfo) {
+                    const start = this.currentPage * this.pageSize + 1;
+                    const end = Math.min((this.currentPage + 1) * this.pageSize, this.totalElements);
+                    paginationInfo.textContent = `Showing ${start}-${end} of ${this.totalElements} campaigns`;
+                }
+                
+                if (prevBtn) {
+                    prevBtn.disabled = this.currentPage === 0;
+                }
+                
+                if (nextBtn) {
+                    nextBtn.disabled = this.currentPage >= this.totalPages - 1;
+                }
+                
+                if (paginationPages) {
+                    let pagesHtml = '';
+                    const maxVisiblePages = 5;
+                    let startPage = Math.max(0, this.currentPage - Math.floor(maxVisiblePages / 2));
+                    let endPage = Math.min(this.totalPages - 1, startPage + maxVisiblePages - 1);
+                    
+                    if (endPage - startPage < maxVisiblePages - 1) {
+                        startPage = Math.max(0, endPage - maxVisiblePages + 1);
+                    }
+                    
+                    for (let i = startPage; i <= endPage; i++) {
+                        pagesHtml += `
+                            <button class="page-number ${i === this.currentPage ? 'active' : ''}" 
+                                    onclick="window.dashboard.goToPage(${i})">
+                                ${i + 1}
+                            </button>
+                        `;
+                    }
+                    
+                    paginationPages.innerHTML = pagesHtml;
+                }
+            }
+
+            goToPage(page) {
+                this.currentPage = page;
+                this.loadCampaigns();
+            }
+
+            populateCategoryFilter(campaigns) {
+                const categoryFilter = document.getElementById('categoryFilter');
+                if (!categoryFilter) return;
+                
+                const categories = [...new Set(campaigns.map(campaign => campaign.subCategoryName))];
+                const currentValue = categoryFilter.value;
+                
+                categoryFilter.innerHTML = '<option value="">All Categories</option>';
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category;
+                    option.textContent = category;
+                    categoryFilter.appendChild(option);
+                });
+                
+                categoryFilter.value = currentValue;
+            }
+
+            applyFilters() {
+                this.currentPage = 0;
+                this.loadCampaigns();
+            }
+
+            showCampaignsError(message) {
+                const campaignsGrid = document.getElementById('campaignsGrid');
+                if (campaignsGrid) {
+                    campaignsGrid.innerHTML = `
+                        <div class="campaigns-empty">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h3>Error Loading Campaigns</h3>
+                            <p>${message}</p>
+                            <button class="btn btn-primary" onclick="window.dashboard.loadCampaigns()" style="margin-top: 15px;">
+                                <i class="fas fa-retry"></i> Try Again
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+
+            formatCurrency(amount) {
+                return new Intl.NumberFormat('en-LK', {
+                    style: 'currency',
+                    currency: 'LKR',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(amount);
+            }
+
+            debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+
+            setupModalEvents() {
+                // Close modal events
+                const closeModal = document.getElementById('closeModal');
+                const closeModalBtn = document.getElementById('closeModalBtn');
+                const modal = document.getElementById('campaignDetailsModal');
+                
+                if (closeModal) {
+                    closeModal.addEventListener('click', () => this.closeModal());
+                }
+                
+                if (closeModalBtn) {
+                    closeModalBtn.addEventListener('click', () => this.closeModal());
+                }
+                
+                if (modal) {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            this.closeModal();
+                        }
+                    });
+                }
+                
+                // Edit campaign button
+                const editCampaignBtn = document.getElementById('editCampaignBtn');
+                if (editCampaignBtn) {
+                    editCampaignBtn.addEventListener('click', () => {
+                        if (this.currentCampaignId) {
+                            this.editCampaign(this.currentCampaignId);
+                        }
+                    });
+                }
+                
+                // Delete campaign button
+                const deleteCampaignBtn = document.getElementById('deleteCampaignBtn');
+                if (deleteCampaignBtn) {
+                    deleteCampaignBtn.addEventListener('click', () => {
+                        if (this.currentCampaignId && this.currentCampaignData) {
+                            this.deleteCampaign(this.currentCampaignId, this.currentCampaignData.title);
+                        }
+                    });
+                }
+                
+                // Create campaign modal events
+                const closeCreateModal = document.getElementById('closeCreateModal');
+                const cancelCreateBtn = document.getElementById('cancelCreateBtn');
+                const createModal = document.getElementById('createCampaignModal');
+                const createForm = document.getElementById('createCampaignForm');
+                
+                if (closeCreateModal) {
+                    closeCreateModal.addEventListener('click', () => this.closeCreateModal());
+                }
+                
+                if (cancelCreateBtn) {
+                    cancelCreateBtn.addEventListener('click', () => this.closeCreateModal());
+                }
+                
+                if (createModal) {
+                    createModal.addEventListener('click', (e) => {
+                        if (e.target === createModal) {
+                            this.closeCreateModal();
+                        }
+                    });
+                }
+                
+                if (createForm) {
+                    createForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        if (this.currentEditCampaignId) {
+                            this.submitUpdateCampaign();
+                        } else {
+                            this.submitCreateCampaign();
+                        }
+                    });
+                }
+                
+                // Donation modal events
+                const closeDonationModal = document.getElementById('closeDonationModal');
+                const closeDonationModalBtn = document.getElementById('closeDonationModalBtn');
+                const donationModal = document.getElementById('donationDetailsModal');
+                
+                if (closeDonationModal) {
+                    closeDonationModal.addEventListener('click', () => this.closeDonationModal());
+                }
+                
+                if (closeDonationModalBtn) {
+                    closeDonationModalBtn.addEventListener('click', () => this.closeDonationModal());
+                }
+                
+                if (donationModal) {
+                    donationModal.addEventListener('click', (e) => {
+                        if (e.target === donationModal) {
+                            this.closeDonationModal();
+                        }
+                    });
+                }
+
+                // Profile edit modal events
+                const closeProfileEditModal = document.getElementById('closeProfileEditModal');
+                const cancelProfileEditBtn = document.getElementById('cancelProfileEditBtn');
+                const profileEditModal = document.getElementById('profileEditModal');
+                const profileEditForm = document.getElementById('profileEditForm');
+                
+                if (closeProfileEditModal) {
+                    closeProfileEditModal.addEventListener('click', () => this.closeProfileEditModal());
+                }
+                
+                if (cancelProfileEditBtn) {
+                    cancelProfileEditBtn.addEventListener('click', () => this.closeProfileEditModal());
+                }
+                
+                if (profileEditModal) {
+                    profileEditModal.addEventListener('click', (e) => {
+                        if (e.target === profileEditModal) {
+                            this.closeProfileEditModal();
+                        }
+                    });
+                }
+                
+                if (profileEditForm) {
+                    profileEditForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.submitProfileUpdate();
+                    });
+                }
+
+                // Password change modal events
+                const closePasswordModal = document.getElementById('closePasswordModal');
+                const cancelPasswordBtn = document.getElementById('cancelPasswordBtn');
+                const passwordModal = document.getElementById('passwordChangeModal');
+                const passwordForm = document.getElementById('passwordChangeForm');
+                
+                if (closePasswordModal) {
+                    closePasswordModal.addEventListener('click', () => this.closePasswordModal());
+                }
+                
+                if (cancelPasswordBtn) {
+                    cancelPasswordBtn.addEventListener('click', () => this.closePasswordModal());
+                }
+                
+                if (passwordModal) {
+                    passwordModal.addEventListener('click', (e) => {
+                        if (e.target === passwordModal) {
+                            this.closePasswordModal();
+                        }
+                    });
+                }
+                
+                if (passwordForm) {
+                    passwordForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.submitPasswordChange();
+                    });
+                }
+                
+                // Escape key to close modals
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        if (modal && modal.style.display !== 'none') {
+                        this.closeModal();
+                        }
+                        if (createModal && createModal.style.display !== 'none') {
+                            this.closeCreateModal();
+                        }
+                        if (donationModal && donationModal.style.display !== 'none') {
+                            this.closeDonationModal();
+                        }
+                        if (profileEditModal && profileEditModal.style.display !== 'none') {
+                            this.closeProfileEditModal();
+                        }
+                        if (passwordModal && passwordModal.style.display !== 'none') {
+                            this.closePasswordModal();
+                        }
+                    }
+                });
+            }
+
+            async viewCampaignDetails(campaignId) {
+                try {
+                    this.currentCampaignId = campaignId;
+                    const modal = document.getElementById('campaignDetailsModal');
+                    const modalContent = document.getElementById('modalContent');
+                    
+                    if (modal) modal.style.display = 'flex';
+                    if (modalContent) {
+                        modalContent.innerHTML = `
+                            <div class="modal-loading">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <span>Loading campaign details...</span>
+                            </div>
+                        `;
+                    }
+
+                    const token = localStorage.getItem('authToken');
+                    if (!token) {
+                        throw new Error('No authentication token found');
+                    }
+
+                    const url = `${this.apiBase}/programs/${campaignId}`;
+                    const response = await fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
+                            'Accept': 'application/json',
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache'
+                        },
+                        mode: 'cors',
+                        credentials: 'omit'
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.currentCampaignData = data.body; // Store campaign data for deletion
+                        this.displayCampaignDetails(data.body);
+                    } else {
+                        throw new Error(data.message || 'Failed to load campaign details');
+                    }
+                } catch (error) {
+                    console.error('Error loading campaign details:', error);
+                    const modalContent = document.getElementById('modalContent');
+                    if (modalContent) {
+                        modalContent.innerHTML = `
+                            <div class="modal-loading">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Error: ${error.message}</span>
+                                <button class="btn btn-primary" onclick="window.dashboard.viewCampaignDetails(${campaignId})" style="margin-top: 15px;">
+                                    <i class="fas fa-retry"></i> Try Again
+                                </button>
+                            </div>
+                        `;
+                    }
+                }
+            }
+
+            displayCampaignDetails(campaign) {
+                const modalContent = document.getElementById('modalContent');
+                if (!modalContent) return;
+
+                const progressPercentage = Math.min((campaign.raised / campaign.targetDonationAmount) * 100, 100);
+                const formattedRaised = this.formatCurrency(campaign.raised);
+                const formattedTarget = this.formatCurrency(campaign.targetDonationAmount);
+                
+                const startDate = new Date(campaign.startDate).toLocaleDateString('en-LK');
+                const endDate = new Date(campaign.endDate).toLocaleDateString('en-LK');
+                const createdDate = new Date(campaign.created).toLocaleDateString('en-LK');
+                const updatedDate = new Date(campaign.updated).toLocaleDateString('en-LK');
+
+                modalContent.innerHTML = `
+                    <div class="campaign-details">
+                        <div class="campaign-hero">
+                            <img src="${campaign.programImage}" alt="${campaign.title}" class="campaign-image-large" onerror="this.style.display='none';">
+                            <div class="campaign-info">
+                                <h2 class="campaign-title-large">${campaign.title}</h2>
+                                <p class="campaign-description-large">${campaign.description}</p>
+                                
+                                <div class="progress-section">
+                                    <div class="progress-header-large">
+                                        <span class="progress-label-large">Fundraising Progress</span>
+                                        <span class="progress-percentage-large">${progressPercentage.toFixed(1)}%</span>
+                                    </div>
+                                    <div class="progress-bar-large">
+                                        <div class="progress-fill-large" style="width: ${progressPercentage}%"></div>
+                                    </div>
+                                    <div class="progress-stats">
+                                        <div class="progress-stat">
+                                            <div class="progress-stat-value">${formattedRaised}</div>
+                                            <div class="progress-stat-label">Raised</div>
+                                        </div>
+                                        <div class="progress-stat">
+                                            <div class="progress-stat-value">${formattedTarget}</div>
+                                            <div class="progress-stat-label">Target</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="details-section">
+                            <h3><i class="fas fa-info-circle"></i> Campaign Information</h3>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">Program Name</div>
+                                    <div class="detail-value large">${campaign.programName}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Category</div>
+                                    <div class="detail-value">${campaign.subCategoryName}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Status</div>
+                                    <div class="detail-value">${campaign.status}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Location</div>
+                                    <div class="detail-value">${campaign.programLocation}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Start Date</div>
+                                    <div class="detail-value">${startDate}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">End Date</div>
+                                    <div class="detail-value">${endDate}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="details-section">
+                            <h3><i class="fas fa-user"></i> Contact Information</h3>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">Contact Person</div>
+                                    <div class="detail-value large">${campaign.contactPersonName}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Email</div>
+                                    <div class="detail-value">${campaign.contactPersonEmail}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Mobile</div>
+                                    <div class="detail-value">${campaign.contactPersonMobile}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="details-section">
+                            <h3><i class="fas fa-building"></i> Charity Information</h3>
+                            <div class="charity-info">
+                                <img src="${campaign.charity.charityLogo}" alt="Charity Logo" class="charity-logo" onerror="this.style.display='none';">
+                                <div class="charity-details">
+                                    <h4>${campaign.charity.name}</h4>
+                                    <p>${campaign.charity.charityDescription}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        ${campaign.relatedDocument1 || campaign.relatedDocument2 || campaign.relatedDocument3 ? `
+                        <div class="details-section">
+                            <h3><i class="fas fa-file-alt"></i> Related Documents</h3>
+                            <div class="documents-section">
+                                ${campaign.relatedDocument1 ? `
+                                    <a href="${campaign.relatedDocument1}" target="_blank" class="document-item">
+                                        <i class="fas fa-file-pdf"></i>
+                                        <span>Document 1</span>
+                                    </a>
+                                ` : ''}
+                                ${campaign.relatedDocument2 ? `
+                                    <a href="${campaign.relatedDocument2}" target="_blank" class="document-item">
+                                        <i class="fas fa-file-pdf"></i>
+                                        <span>Document 2</span>
+                                    </a>
+                                ` : ''}
+                                ${campaign.relatedDocument3 ? `
+                                    <a href="${campaign.relatedDocument3}" target="_blank" class="document-item">
+                                        <i class="fas fa-file-pdf"></i>
+                                        <span>Document 3</span>
+                                    </a>
+                                ` : ''}
+                            </div>
+                        </div>
+                        ` : ''}
+
+                        ${campaign.programVideo ? `
+                        <div class="details-section">
+                            <h3><i class="fas fa-video"></i> Campaign Video</h3>
+                            <div style="text-align: center; margin-top: 15px;">
+                                <a href="${campaign.programVideo}" target="_blank" class="btn btn-primary">
+                                    <i class="fas fa-play"></i> Watch Video
+                                </a>
+                            </div>
+                        </div>
+                        ` : ''}
+
+                        <div class="details-section">
+                            <h3><i class="fas fa-clock"></i> Timeline</h3>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <div class="detail-label">Created</div>
+                                    <div class="detail-value">${createdDate}</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Last Updated</div>
+                                    <div class="detail-value">${updatedDate}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            closeModal() {
+                const modal = document.getElementById('campaignDetailsModal');
+                if (modal) {
+                    modal.style.display = 'none';
+                }
+                this.currentCampaignId = null;
+                this.currentCampaignData = null;
+            }
+
+            async openCreateCampaignModal() {
+                const modal = document.getElementById('createCampaignModal');
+                if (modal) {
+                    modal.style.display = 'flex';
+                    
+                    // Ensure we're in create mode
+                    this.resetEditState();
+                    
+                    await this.loadCategories();
+                    this.resetCreateForm();
+                }
+            }
+
+            closeCreateModal() {
+                const modal = document.getElementById('createCampaignModal');
+                if (modal) {
+                    modal.style.display = 'none';
+                }
+                this.resetCreateForm();
+                this.resetEditState();
+            }
+
+            resetEditState() {
+                this.currentEditCampaignId = null;
+                this.currentEditSubCategoryId = null;
+                
+                // Reset modal title and button
+                const modalTitle = document.querySelector('#createCampaignModal .modal-title');
+                if (modalTitle) {
+                    modalTitle.textContent = 'Create New Campaign';
+                }
+                
+                const submitBtn = document.getElementById('submitCreateBtn');
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-plus"></i> Create Campaign';
+                }
+                
+                // Reset form labels and help text for create mode
+                this.resetFormLabelsForCreate();
+            }
+
+            resetFormLabelsForCreate() {
+                // Reset Document 1 label and help text for create mode
+                const document1Label = document.getElementById('relatedDocument1Label');
+                const document1Help = document.getElementById('relatedDocument1Help');
+                const document1Input = document.getElementById('relatedDocument1');
+                
+                if (document1Label) {
+                    document1Label.textContent = 'Document 1 *';
+                }
+                if (document1Help) {
+                    document1Help.textContent = 'Required for new campaigns - PDF, DOC, DOCX formats supported';
+                }
+                if (document1Input) {
+                    document1Input.setAttribute('required', 'required');
+                }
+            }
+
+            resetCreateForm() {
+                const form = document.getElementById('createCampaignForm');
+                if (form) {
+                    form.reset();
+                }
+            }
+
+            async loadCategories() {
+                try {
+                    const response = await fetch('http://localhost:8080/api/v1/public/programs/categories', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    });
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.populateSubCategoryDropdown(data.body);
+                    } else {
+                        console.error('Failed to load categories:', data.message);
+                    }
+                } catch (error) {
+                    console.error('Error loading categories:', error);
+                }
+            }
+
+            populateSubCategoryDropdown(categories) {
+                const subCategorySelect = document.getElementById('subCategoryId');
+                if (!subCategorySelect) return;
+
+                // Clear existing options except the first one
+                subCategorySelect.innerHTML = '<option value="">Select Category</option>';
+
+                categories.forEach(category => {
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label = category.name;
+                    
+                    category.subCategories.forEach(subCategory => {
+                        const option = document.createElement('option');
+                        option.value = subCategory.id;
+                        option.textContent = subCategory.name;
+                        optgroup.appendChild(option);
+                    });
+                    
+                    subCategorySelect.appendChild(optgroup);
+                });
+
+                // Set selected category if editing
+                if (this.currentEditSubCategoryId) {
+                    subCategorySelect.value = this.currentEditSubCategoryId;
+                }
+            }
+
+            async submitCreateCampaign() {
+                const form = document.getElementById('createCampaignForm');
+                const submitBtn = document.getElementById('submitCreateBtn');
+                
+                if (!form) return;
+
+                // Validate required fields
+                if (!this.validateCreateForm()) {
+                    return;
+                }
+
+                try {
+                    // Disable submit button and show loading
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
+                    }
+
+                    const token = localStorage.getItem('authToken');
+                    if (!token) {
+                        throw new Error('No authentication token found');
+                    }
+
+                    // Step 1: Submit basic information
+                    const basicInfo = this.getBasicCampaignInfo();
+                    const step1Response = await fetch(`${this.apiBase}/programs/register/step1`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                        },
+                        body: JSON.stringify(basicInfo)
+                    });
+
+                    const step1Data = await step1Response.json();
+
+                    if (!step1Data.success) {
+                        throw new Error(step1Data.message || 'Failed to create campaign basic information');
+                    }
+
+                    // Step 2: Upload files (if any)
+                    const programId = step1Data.body.id;
+                    const files = this.getFileData();
+                    
+                    if (this.hasFilesToUpload(files)) {
+                        const formData = new FormData();
+                        formData.append('programId', programId.toString());
+                        
+                        // Add files only if they exist
+                        if (files.programImage) {
+                            formData.append('programImage', files.programImage);
+                        }
+                        if (files.programVideo) {
+                            formData.append('programVideo', files.programVideo);
+                        }
+                        if (files.relatedDocument1) {
+                            formData.append('relatedDocument1', files.relatedDocument1);
+                        }
+                        if (files.relatedDocument2) {
+                            formData.append('relatedDocument2', files.relatedDocument2);
+                        }
+                        if (files.relatedDocument3) {
+                            formData.append('relatedDocument3', files.relatedDocument3);
+                        }
+
+                        const step2Response = await fetch(`${this.apiBase}/programs/register/step2`, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                            },
+                            body: formData
+                        });
+
+                        const step2Data = await step2Response.json();
+
+                        if (!step2Data.success) {
+                            throw new Error(step2Data.message || 'Failed to upload files');
+                        }
+                    }
+
+                    // Show success message
+                    alert('Campaign created successfully!');
+                    
+                    // Close modal and refresh campaigns list
+                    this.closeCreateModal();
+                    this.loadCampaigns();
+
+                } catch (error) {
+                    console.error('Error creating campaign:', error);
+                    alert(`Failed to create campaign: ${error.message}`);
+                } finally {
+                    // Re-enable submit button
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<i class="fas fa-plus"></i> Create Campaign';
+                    }
+                }
+            }
+
+            getBasicCampaignInfo() {
+                return {
+                    programName: document.getElementById('programName').value,
+                    title: document.getElementById('title').value,
+                    description: document.getElementById('description').value,
+                    contactPersonEmail: document.getElementById('contactPersonEmail').value,
+                    contactPersonMobile: document.getElementById('contactPersonMobile').value,
+                    contactPersonName: document.getElementById('contactPersonName').value,
+                    programLocation: document.getElementById('programLocation').value,
+                    targetDonationAmount: parseFloat(document.getElementById('targetDonationAmount').value),
+                    raised: parseFloat(document.getElementById('raised').value) || 0,
+                    startDate: document.getElementById('startDate').value || null,
+                    endDate: document.getElementById('endDate').value || null,
+                    subCategoryId: parseInt(document.getElementById('subCategoryId').value)
+                };
+            }
+
+            getFileData() {
+                return {
+                    programImage: document.getElementById('programImage').files[0] || null,
+                    programVideo: document.getElementById('programVideo').files[0] || null,
+                    relatedDocument1: document.getElementById('relatedDocument1').files[0] || null,
+                    relatedDocument2: document.getElementById('relatedDocument2').files[0] || null,
+                    relatedDocument3: document.getElementById('relatedDocument3').files[0] || null
+                };
+            }
+
+            hasFilesToUpload(files) {
+                return files.programImage || files.programVideo || 
+                       files.relatedDocument1 || files.relatedDocument2 || files.relatedDocument3;
+            }
+
+            validateCreateForm() {
+                const requiredFields = [
+                    'programName', 'title', 'description', 'programLocation', 
+                    'subCategoryId', 'targetDonationAmount', 'contactPersonName', 
+                    'contactPersonEmail', 'contactPersonMobile'
+                ];
+
+                for (const fieldName of requiredFields) {
+                    const field = document.getElementById(fieldName);
+                    if (!field || !field.value.trim()) {
+                        alert(`Please fill in the required field: ${fieldName.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+                        if (field) field.focus();
+                        return false;
+                    }
+                }
+
+                // Validate email format
+                const email = document.getElementById('contactPersonEmail').value;
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('Please enter a valid email address');
+                    document.getElementById('contactPersonEmail').focus();
+                    return false;
+                }
+
+                // Validate target amount
+                const targetAmount = parseFloat(document.getElementById('targetDonationAmount').value);
+                if (targetAmount <= 0) {
+                    alert('Target donation amount must be greater than 0');
+                    document.getElementById('targetDonationAmount').focus();
+                    return false;
+                }
+
+                // For new campaigns: at least one related document is required
+                // For updates: documents are optional (user can choose to update or keep existing)
+                if (!this.currentEditCampaignId) {
+                    const document1 = document.getElementById('relatedDocument1').files[0];
+                    if (!document1) {
+                        alert('At least one related document is required for new campaigns');
+                        document.getElementById('relatedDocument1').focus();
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            async editCampaign(campaignId) {
+                try {
+                this.closeModal();
+                    
+                    // Load campaign details first
+                    const campaignData = await this.loadCampaignDetails(campaignId);
+                    if (!campaignData) {
+                        alert('Failed to load campaign details');
+                        return;
+                    }
+                    
+                    // Open edit modal with campaign data
+                    this.openEditCampaignModal(campaignData);
+                } catch (error) {
+                    console.error('Error loading campaign for edit:', error);
+                    alert('Failed to load campaign details for editing');
+                }
+            }
+
+            async loadCampaignDetails(campaignId) {
+                try {
+                    const token = localStorage.getItem('authToken');
+                    if (!token) {
+                        throw new Error('No authentication token found');
+                    }
+
+                    const response = await fetch(`${this.apiBase}/programs/${campaignId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        }
+                    });
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        return data.body;
+                    } else {
+                        throw new Error(data.message || 'Failed to load campaign details');
+                    }
+                } catch (error) {
+                    console.error('Error loading campaign details:', error);
+                    throw error;
+                }
+            }
+
+            openEditCampaignModal(campaignData) {
+                const modal = document.getElementById('createCampaignModal');
+                if (modal) {
+                    modal.style.display = 'flex';
+                    
+                    // Update modal title
+                    const modalTitle = modal.querySelector('.modal-title');
+                    if (modalTitle) {
+                        modalTitle.textContent = 'Edit Campaign';
+                    }
+                    
+                    // Update submit button
+                    const submitBtn = document.getElementById('submitCreateBtn');
+                    if (submitBtn) {
+                        submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Campaign';
+                    }
+                    
+                    // Update labels and help text for edit mode
+                    this.updateFormLabelsForEdit();
+                    
+                    // Populate form with existing data
+                    this.populateEditForm(campaignData);
+                    
+                    // Load categories
+                    this.loadCategories();
+                }
+            }
+
+            updateFormLabelsForEdit() {
+                // Update Document 1 label and help text for edit mode
+                const document1Label = document.getElementById('relatedDocument1Label');
+                const document1Help = document.getElementById('relatedDocument1Help');
+                const document1Input = document.getElementById('relatedDocument1');
+                
+                if (document1Label) {
+                    document1Label.textContent = 'Document 1';
+                }
+                if (document1Help) {
+                    document1Help.textContent = 'Optional - Upload new document to replace existing one';
+                }
+                if (document1Input) {
+                    document1Input.removeAttribute('required');
+                }
+            }
+
+            populateEditForm(campaignData) {
+                // Basic information
+                document.getElementById('programName').value = campaignData.programName || '';
+                document.getElementById('title').value = campaignData.title || '';
+                document.getElementById('description').value = campaignData.description || '';
+                document.getElementById('programLocation').value = campaignData.programLocation || '';
+                document.getElementById('targetDonationAmount').value = campaignData.targetDonationAmount || '';
+                document.getElementById('raised').value = campaignData.raised || '0';
+                
+                // Contact information
+                document.getElementById('contactPersonName').value = campaignData.contactPersonName || '';
+                document.getElementById('contactPersonEmail').value = campaignData.contactPersonEmail || '';
+                document.getElementById('contactPersonMobile').value = campaignData.contactPersonMobile || '';
+                
+                // Dates
+                if (campaignData.startDate) {
+                    const startDate = new Date(campaignData.startDate).toISOString().split('T')[0];
+                    document.getElementById('startDate').value = startDate;
+                }
+                if (campaignData.endDate) {
+                    const endDate = new Date(campaignData.endDate).toISOString().split('T')[0];
+                    document.getElementById('endDate').value = endDate;
+                }
+                
+                // Category (will be set after categories are loaded)
+                this.currentEditCampaignId = campaignData.id;
+                this.currentEditSubCategoryId = campaignData.subCategory?.id;
+            }
+
+            async submitUpdateCampaign() {
+                const form = document.getElementById('createCampaignForm');
+                const submitBtn = document.getElementById('submitCreateBtn');
+                
+                if (!form || !this.currentEditCampaignId) return;
+
+                // Validate required fields
+                if (!this.validateCreateForm()) {
+                    return;
+                }
+
+                try {
+                    // Disable submit button and show loading
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+                    }
+
+                    const token = localStorage.getItem('authToken');
+                    if (!token) {
+                        throw new Error('No authentication token found');
+                    }
+
+                    // Step 1: Update basic information
+                    const basicInfo = this.getBasicCampaignInfo();
+                    const step1Response = await fetch(`${this.apiBase}/programs/${this.currentEditCampaignId}/update/step1`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                        },
+                        body: JSON.stringify(basicInfo)
+                    });
+
+                    const step1Data = await step1Response.json();
+
+                    if (!step1Data.success) {
+                        throw new Error(step1Data.message || 'Failed to update campaign basic information');
+                    }
+
+                    // Step 2: Update files (if any)
+                    const files = this.getFileData();
+                    
+                    if (this.hasFilesToUpload(files)) {
+                        const formData = new FormData();
+                        formData.append('programId', this.currentEditCampaignId.toString());
+                        
+                        // Add files only if they exist
+                        if (files.programImage) {
+                            formData.append('programImage', files.programImage);
+                        }
+                        if (files.programVideo) {
+                            formData.append('programVideo', files.programVideo);
+                        }
+                        if (files.relatedDocument1) {
+                            formData.append('relatedDocument1', files.relatedDocument1);
+                        }
+                        if (files.relatedDocument2) {
+                            formData.append('relatedDocument2', files.relatedDocument2);
+                        }
+                        if (files.relatedDocument3) {
+                            formData.append('relatedDocument3', files.relatedDocument3);
+                        }
+
+                        const step2Response = await fetch(`${this.apiBase}/programs/${this.currentEditCampaignId}/update/step2`, {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                            },
+                            body: formData
+                        });
+
+                        const step2Data = await step2Response.json();
+
+                        if (!step2Data.success) {
+                            throw new Error(step2Data.message || 'Failed to update files');
+                        }
+                    }
+
+                    // Show success message
+                    alert('Campaign updated successfully!');
+                    
+                    // Close modal and refresh campaigns list
+                    this.closeCreateModal();
+                    this.loadCampaigns();
+
+                } catch (error) {
+                    console.error('Error updating campaign:', error);
+                    alert(`Failed to update campaign: ${error.message}`);
+                } finally {
+                    // Re-enable submit button
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Campaign';
+                    }
+                }
+            }
+
+            async deleteCampaign(campaignId, campaignTitle) {
+                // Show confirmation dialog
+                const confirmed = confirm(`Are you sure you want to delete the campaign "${campaignTitle}"?\n\nThis action cannot be undone.`);
+                
+                if (!confirmed) {
+                    return;
+                }
+
+                try {
+                    const token = localStorage.getItem('authToken');
+                    if (!token) {
+                        throw new Error('No authentication token found');
+                    }
+
+                    const response = await fetch(`${this.apiBase}/programs/${campaignId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        }
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        alert('Campaign deleted successfully!');
+                        // Close modal if it's open
+                        this.closeModal();
+                        // Refresh campaigns list
+                        this.loadCampaigns();
+                    } else {
+                        throw new Error(data.message || 'Failed to delete campaign');
+                    }
+                } catch (error) {
+                    console.error('Error deleting campaign:', error);
+                    alert(`Failed to delete campaign: ${error.message}`);
+                }
+            }
+
+            // Donations Methods
+            async loadDonations() {
+                try {
+                    const loadingElement = document.getElementById('donationsLoading');
+                    const donationsList = document.getElementById('donationsList');
+                    
+                    if (loadingElement) loadingElement.style.display = 'block';
+                    if (donationsList) donationsList.innerHTML = '';
+
+                    const token = localStorage.getItem('authToken');
+                    if (!token) {
+                        throw new Error('No authentication token found');
+                    }
+
+                    // Build query parameters
+                    const params = new URLSearchParams();
+                    params.append('page', this.donationsCurrentPage);
+                    params.append('size', this.donationsPageSize);
+                    
+                    const startDate = document.getElementById('startDateFilter')?.value;
+                    const endDate = document.getElementById('endDateFilter')?.value;
+                    const isAnonymous = document.getElementById('anonymousFilter')?.value;
+                    
+                    if (startDate) params.append('startDate', startDate);
+                    if (endDate) params.append('endDate', endDate);
+                    if (isAnonymous !== '') params.append('isAnonymous', isAnonymous);
+
+                    const url = `${this.apiBase}/donations?${params.toString()}`;
+                    const response = await fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
+                            'Accept': 'application/json',
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache'
+                        },
+                        mode: 'cors',
+                        credentials: 'omit'
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.donationsData = data.body.content || [];
+                        this.donationsTotalPages = data.body.totalPages || 0;
+                        this.donationsTotalElements = data.body.totalElements || 0;
+                        
+                        this.displayDonations();
+                        this.updateDonationsPagination();
+                    } else {
+                        throw new Error(data.message || 'Failed to load donations');
+                    }
+                } catch (error) {
+                    console.error('Error loading donations:', error);
+                    const donationsList = document.getElementById('donationsList');
+                    if (donationsList) {
+                        donationsList.innerHTML = `
+                            <div class="error-message">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <p>Failed to load donations: ${error.message}</p>
+                            </div>
+                        `;
+                    }
+                } finally {
+                    const loadingElement = document.getElementById('donationsLoading');
+                    if (loadingElement) loadingElement.style.display = 'none';
+                }
+            }
+
+            displayDonations() {
+                const donationsList = document.getElementById('donationsList');
+                if (!donationsList) return;
+
+                if (this.donationsData.length === 0) {
+                    donationsList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-hand-holding-heart"></i>
+                            <h3>No donations found</h3>
+                            <p>No donations match your current filters.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                donationsList.innerHTML = this.donationsData.map(donation => `
+                    <div class="donation-item" onclick="window.dashboard.viewDonationDetails(${donation.id})">
+                        <div class="donation-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="donation-info">
+                            <div class="donation-amount">${this.formatCurrency(donation.actualDonationAmount)}</div>
+                            <div class="donation-program">${donation.programTitle}</div>
+                            <div class="donation-donor">${donation.donorDisplayName}</div>
+                        </div>
+                        <div class="donation-meta">
+                            <div class="donation-date">${donation.donationDateFormatted}</div>
+                            <div class="donation-status status-${donation.status.toLowerCase()}">${donation.status}</div>
+                        </div>
+                        <div class="donation-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            async viewDonationDetails(donationId) {
+                try {
+                    const donation = this.donationsData.find(d => d.id === donationId);
+                    if (!donation) {
+                        throw new Error('Donation not found');
+                    }
+
+                    const modal = document.getElementById('donationDetailsModal');
+                    const modalContent = document.getElementById('donationModalContent');
+                    
+                    if (modal) modal.style.display = 'flex';
+                    if (modalContent) {
+                        modalContent.innerHTML = `
+                            <div class="donation-details">
+                                <div class="donation-header">
+                                    <div class="donation-amount-large">${this.formatCurrency(donation.actualDonationAmount)}</div>
+                                    <div class="donation-status-badge status-${donation.status.toLowerCase()}">${donation.status}</div>
+                                </div>
+                                
+                                <div class="donation-sections">
+                                    <div class="donation-section">
+                                        <h3><i class="fas fa-info-circle"></i> Donation Information</h3>
+                                        <div class="info-grid">
+                                            <div class="info-item">
+                                                <label>Donation ID:</label>
+                                                <span>#${donation.id}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <label>Actual Amount:</label>
+                                                <span>${this.formatCurrency(donation.actualDonationAmount)}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <label>Net Amount:</label>
+                                                <span>${this.formatCurrency(donation.netDonationAmount)}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <label>Service Charge:</label>
+                                                <span>${donation.serviceCharge}% (${this.formatCurrency(donation.actualDonationAmount - donation.netDonationAmount)})</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <label>Payment Method:</label>
+                                                <span>${donation.paymentMethod}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <label>Payment Reference:</label>
+                                                <span>${donation.paymentReferenceNumber}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <label>Donation Date:</label>
+                                                <span>${donation.donationDateFormatted}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <label>Anonymous:</label>
+                                                <span>${donation.isAnonymousDonation ? 'Yes' : 'No'}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="donation-section">
+                                        <h3><i class="fas fa-bullhorn"></i> Campaign Information</h3>
+                                        <div class="info-grid">
+                                            <div class="info-item">
+                                                <label>Program Name:</label>
+                                                <span>${donation.programName}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <label>Campaign Title:</label>
+                                                <span>${donation.programTitle}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <label>Program ID:</label>
+                                                <span>#${donation.programId}</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <label>Completion:</label>
+                                                <span>${donation.completionPercentage.toFixed(1)}%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="donation-section">
+                                        <h3><i class="fas fa-user"></i> Donor Information</h3>
+                                        <div class="info-grid">
+                                            <div class="info-item">
+                                                <label>Donor Name:</label>
+                                                <span>${donation.donorDisplayName}</span>
+                                            </div>
+                                            ${donation.donorEmail ? `
+                                            <div class="info-item">
+                                                <label>Email:</label>
+                                                <span>${donation.donorEmail}</span>
+                                            </div>
+                                            ` : ''}
+                                            ${donation.donorMobile ? `
+                                            <div class="info-item">
+                                                <label>Mobile:</label>
+                                                <span>${donation.donorMobile}</span>
+                                            </div>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+
+                                    ${donation.comments ? `
+                                    <div class="donation-section">
+                                        <h3><i class="fas fa-comment"></i> Comments</h3>
+                                        <div class="donation-comments">
+                                            <p>"${donation.comments}"</p>
+                                        </div>
+                                    </div>
+                                    ` : ''}
+
+                                    ${donation.paymentSlipUrl ? `
+                                    <div class="donation-section">
+                                        <h3><i class="fas fa-file-pdf"></i> Payment Slip</h3>
+                                        <div class="payment-slip">
+                                            <a href="${donation.paymentSlipUrl}" target="_blank" class="btn btn-outline">
+                                                <i class="fas fa-download"></i> View Payment Slip
+                                            </a>
+                                        </div>
+                                    </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }
+                } catch (error) {
+                    console.error('Error loading donation details:', error);
+                    alert(`Failed to load donation details: ${error.message}`);
+                }
+            }
+
+            closeDonationModal() {
+                const modal = document.getElementById('donationDetailsModal');
+                if (modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            applyDonationsFilters() {
+                this.donationsCurrentPage = 0;
+                this.loadDonations();
+            }
+
+            goToDonationsPage(page) {
+                this.donationsCurrentPage = page;
+                this.loadDonations();
+            }
+
+            updateDonationsPagination() {
+                const paginationInfo = document.getElementById('donationsPaginationInfo');
+                const prevBtn = document.getElementById('donationsPrevPage');
+                const nextBtn = document.getElementById('donationsNextPage');
+                const paginationPages = document.getElementById('donationsPaginationPages');
+
+                if (paginationInfo) {
+                    const start = this.donationsCurrentPage * this.donationsPageSize + 1;
+                    const end = Math.min((this.donationsCurrentPage + 1) * this.donationsPageSize, this.donationsTotalElements);
+                    paginationInfo.textContent = `Showing ${start}-${end} of ${this.donationsTotalElements} donations`;
+                }
+
+                if (prevBtn) {
+                    prevBtn.disabled = this.donationsCurrentPage === 0;
+                }
+
+                if (nextBtn) {
+                    nextBtn.disabled = this.donationsCurrentPage >= this.donationsTotalPages - 1;
+                }
+
+                if (paginationPages) {
+                    paginationPages.innerHTML = '';
+                    const maxPages = Math.min(5, this.donationsTotalPages);
+                    const startPage = Math.max(0, this.donationsCurrentPage - Math.floor(maxPages / 2));
+                    
+                    for (let i = startPage; i < Math.min(startPage + maxPages, this.donationsTotalPages); i++) {
+                        const pageBtn = document.createElement('button');
+                        pageBtn.className = `pagination-page ${i === this.donationsCurrentPage ? 'active' : ''}`;
+                        pageBtn.textContent = i + 1;
+                        pageBtn.addEventListener('click', () => this.goToDonationsPage(i));
+                        paginationPages.appendChild(pageBtn);
+                    }
+                }
+            }
+
+            // Profile Methods
+            async loadProfile() {
+                try {
+                    const loadingElement = document.getElementById('profileLoading');
+                    const profileContent = document.getElementById('profileContentData');
+                    
+                    if (loadingElement) loadingElement.style.display = 'block';
+                    if (profileContent) profileContent.innerHTML = '';
+
+                    const token = localStorage.getItem('authToken');
+                    if (!token) {
+                        throw new Error('No authentication token found');
+                    }
+
+                    const url = `${this.apiBase}/profile`;
+                    const response = await fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
+                            'Accept': 'application/json',
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache'
+                        },
+                        mode: 'cors',
+                        credentials: 'omit'
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.profileData = data.body;
+                        this.displayProfile();
+                    } else {
+                        throw new Error(data.message || 'Failed to load profile');
+                    }
+                } catch (error) {
+                    console.error('Error loading profile:', error);
+                    const profileContent = document.getElementById('profileContentData');
+                    if (profileContent) {
+                        profileContent.innerHTML = `
+                            <div class="error-message">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <p>Failed to load profile: ${error.message}</p>
+                            </div>
+                        `;
+                    }
+                } finally {
+                    const loadingElement = document.getElementById('profileLoading');
+                    if (loadingElement) loadingElement.style.display = 'none';
+                }
+            }
+
+            displayProfile() {
+                const profileContent = document.getElementById('profileContentData');
+                if (!profileContent || !this.profileData) return;
+
+                const profile = this.profileData;
+                profileContent.innerHTML = `
+                    <div class="profile-overview">
+                        <div class="profile-header-info">
+                            <div class="profile-logo">
+                                ${profile.logoUrl ? 
+                                    `<img src="${profile.logoUrl}" alt="${profile.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` : 
+                                    ''
+                                }
+                                <div class="profile-logo-placeholder" style="display: ${profile.logoUrl ? 'none' : 'flex'};">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                            </div>
+                            <div class="profile-basic-info">
+                                <h3 class="profile-name">${profile.name}</h3>
+                                <p class="profile-email">${profile.email}</p>
+                                <div class="profile-status">
+                                    <span class="status-badge status-${profile.status.toLowerCase()}">${profile.status}</span>
+                                    ${profile.accountVerifyStatus ? '<span class="verified-badge"><i class="fas fa-check-circle"></i> Verified</span>' : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-sections">
+                        <div class="profile-section">
+                            <h3><i class="fas fa-info-circle"></i> Organization Information</h3>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>Organization Name:</label>
+                                    <span>${profile.name}</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Email:</label>
+                                    <span>${profile.email}</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Description:</label>
+                                    <span>${profile.description || 'Not provided'}</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Website:</label>
+                                    <span>${profile.website ? `<a href="${profile.website}" target="_blank">${profile.website}</a>` : 'Not provided'}</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Phone Number:</label>
+                                    <span>${profile.phoneNumber || 'Not provided'}</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Execution Type:</label>
+                                    <span>${profile.executionType}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-section">
+                            <h3><i class="fas fa-user"></i> Contact Person Information</h3>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>Contact Person Name:</label>
+                                    <span>${profile.contactPersonName || 'Not provided'}</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Contact Person Mobile:</label>
+                                    <span>${profile.contactPersonMobile || 'Not provided'}</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>NIC/Registration Number:</label>
+                                    <span>${profile.nicNumberOrRegistrationNumber || 'Not provided'}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-section">
+                            <h3><i class="fas fa-chart-bar"></i> Statistics</h3>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <div class="stat-value">${profile.totalPrograms}</div>
+                                    <div class="stat-label">Total Programs</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">${profile.activePrograms}</div>
+                                    <div class="stat-label">Active Programs</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">${profile.totalDonations}</div>
+                                    <div class="stat-label">Total Donations</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">${this.formatCurrency(profile.totalRaisedAmount)}</div>
+                                    <div class="stat-label">Total Raised</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-section">
+                            <h3><i class="fas fa-calendar"></i> Account Information</h3>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>Created:</label>
+                                    <span>${new Date(profile.created).toLocaleDateString()}</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Last Updated:</label>
+                                    <span>${new Date(profile.updated).toLocaleDateString()}</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Account Status:</label>
+                                    <span class="status-badge status-${profile.status.toLowerCase()}">${profile.status}</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Verification Status:</label>
+                                    <span class="status-badge ${profile.accountVerifyStatus ? 'status-verified' : 'status-pending'}">
+                                        ${profile.accountVerifyStatus ? 'Verified' : 'Pending'}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            openProfileEditModal() {
+                if (!this.profileData) {
+                    alert('Profile data not loaded. Please refresh the page.');
+                    return;
+                }
+
+                const modal = document.getElementById('profileEditModal');
+                if (modal) {
+                    modal.style.display = 'flex';
+                    this.populateProfileEditForm();
+                }
+            }
+
+            populateProfileEditForm() {
+                const profile = this.profileData;
+                
+                document.getElementById('profileName').value = profile.name || '';
+                document.getElementById('profileEmail').value = profile.email || '';
+                document.getElementById('profileDescription').value = profile.description || '';
+                document.getElementById('profileWebsite').value = profile.website || '';
+                document.getElementById('profilePhone').value = profile.phoneNumber || '';
+                document.getElementById('contactPersonName').value = profile.contactPersonName || '';
+                document.getElementById('contactPersonMobile').value = profile.contactPersonMobile || '';
+                document.getElementById('contactPersonEmail').value = profile.contactPersonEmail || '';
+                document.getElementById('nicOrRegNumber').value = profile.nicNumberOrRegistrationNumber || '';
+            }
+
+            closeProfileEditModal() {
+                const modal = document.getElementById('profileEditModal');
+                if (modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            async submitProfileUpdate() {
+                try {
+                    const submitBtn = document.getElementById('submitProfileEditBtn');
+                    const originalText = submitBtn.innerHTML;
+                    
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+                    submitBtn.disabled = true;
+
+                    const token = localStorage.getItem('authToken');
+                    if (!token) {
+                        throw new Error('No authentication token found');
+                    }
+
+                    const formData = new FormData(document.getElementById('profileEditForm'));
+                    const updateData = {
+                        name: formData.get('name'),
+                        description: formData.get('description'),
+                        website: formData.get('website'),
+                        contactPersonName: formData.get('contactPersonName'),
+                        contactPersonMobile: formData.get('contactPersonMobile'),
+                        contactPersonEmail: formData.get('contactPersonEmail'),
+                        nicNumberOrRegistrationNumber: formData.get('nicNumberOrRegistrationNumber'),
+                        phoneNumber: formData.get('phoneNumber')
+                    };
+
+                    const url = `${this.apiBase}/profile`;
+                    const response = await fetch(url, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
+                            'Accept': 'application/json',
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache'
+                        },
+                        body: JSON.stringify(updateData),
+                        mode: 'cors',
+                        credentials: 'omit'
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.profileData = data.body;
+                        this.displayProfile();
+                        this.closeProfileEditModal();
+                        alert('Profile updated successfully!');
+                    } else {
+                        throw new Error(data.message || 'Failed to update profile');
+                    }
+                } catch (error) {
+                    console.error('Error updating profile:', error);
+                    alert(`Failed to update profile: ${error.message}`);
+                } finally {
+                    const submitBtn = document.getElementById('submitProfileEditBtn');
+                    submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Profile';
+                    submitBtn.disabled = false;
+                }
+            }
+
+            openPasswordChangeModal() {
+                const modal = document.getElementById('passwordChangeModal');
+                if (modal) {
+                    modal.style.display = 'flex';
+                    // Clear form
+                    document.getElementById('passwordChangeForm').reset();
+                }
+            }
+
+            closePasswordModal() {
+                const modal = document.getElementById('passwordChangeModal');
+                if (modal) {
+                    modal.style.display = 'none';
+                }
+            }
+
+            async submitPasswordChange() {
+                try {
+                    const submitBtn = document.getElementById('submitPasswordBtn');
+                    const originalText = submitBtn.innerHTML;
+                    
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Changing...';
+                    submitBtn.disabled = true;
+
+                    const token = localStorage.getItem('authToken');
+                    if (!token) {
+                        throw new Error('No authentication token found');
+                    }
+
+                    const formData = new FormData(document.getElementById('passwordChangeForm'));
+                    const newPassword = formData.get('newPassword');
+                    const confirmPassword = formData.get('confirmPassword');
+
+                    if (newPassword !== confirmPassword) {
+                        throw new Error('New password and confirm password do not match');
+                    }
+
+                    const passwordData = {
+                        currentPassword: formData.get('currentPassword'),
+                        newPassword: newPassword,
+                        confirmPassword: confirmPassword
+                    };
+
+                    const url = `${this.apiBase}/profile/password`;
+                    const response = await fetch(url, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
+                            'Accept': 'application/json',
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache'
+                        },
+                        body: JSON.stringify(passwordData),
+                        mode: 'cors',
+                        credentials: 'omit'
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.closePasswordModal();
+                        alert('Password changed successfully!');
+                    } else {
+                        throw new Error(data.message || 'Failed to change password');
+                    }
+                } catch (error) {
+                    console.error('Error changing password:', error);
+                    alert(`Failed to change password: ${error.message}`);
+                } finally {
+                    const submitBtn = document.getElementById('submitPasswordBtn');
+                    submitBtn.innerHTML = '<i class="fas fa-key"></i> Change Password';
+                    submitBtn.disabled = false;
+                }
+            }
+        }
+
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginManager = new LoginManager();
+            
+            if (!loginManager.isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            window.dashboard = new AdminDashboard();
+            window.dashboard.init();
+        });
+    </script>
+</body>
+</html>

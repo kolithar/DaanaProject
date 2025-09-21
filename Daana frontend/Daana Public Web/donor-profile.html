@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Profile - Daana.lk</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="resources/logo/Danna-logo.webp" alt="Daana.lk Logo" class="logo">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#about" class="nav-link" onclick="navigateToSection('about')">About</a></li>
+                <li><a href="index.html#categories" class="nav-link" onclick="navigateToSection('categories')">Categories</a></li>
+                <li><a href="index.html#causes" class="nav-link" onclick="navigateToSection('causes')">Causes</a></li>
+                <li><a href="index.html#donate" class="nav-link" onclick="navigateToSection('donate')">Donate</a></li>
+                <li><a href="index.html#contact" class="nav-link" onclick="navigateToSection('contact')">Contact</a></li>
+                <li class="nav-auth" id="navAuth">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="profile-main">
+        <div class="container">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-avatar-section">
+                    <div class="profile-avatar" id="profileAvatar">
+                        <img id="profileImage" src="" alt="Profile Picture" style="display: none;">
+                        <div class="avatar-placeholder" id="avatarPlaceholder">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="avatar-overlay" onclick="document.getElementById('profileImageInput').click()">
+                            <i class="fas fa-camera"></i>
+                            <span>Change Photo</span>
+                        </div>
+                    </div>
+                    <input type="file" id="profileImageInput" accept="image/*" style="display: none;" onchange="handleProfileImageUpload(event)">
+                </div>
+                <div class="profile-info">
+                    <h1 id="profileName">Loading...</h1>
+                    <p id="profileEmail">Loading...</p>
+                    <div class="profile-status">
+                        <span class="status-badge" id="accountStatus">
+                            <i class="fas fa-check-circle"></i>
+                            Account Verified
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Content -->
+            <div class="profile-content">
+                <!-- Profile Form -->
+                <div class="profile-form-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-user-edit"></i> Personal Information</h2>
+                        <p>Update your personal details and preferences</p>
+                    </div>
+                    
+                    <form id="profileForm" class="profile-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" readonly>
+                                <small class="form-help">Email cannot be changed</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select id="gender" name="gender" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="MALE">Male</option>
+                                    <option value="FEMALE">Female</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phoneNumber">Phone Number</label>
+                                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+94 XX XXX XXXX">
+                            </div>
+                            <div class="form-group">
+                                <label for="uniqueCustomerId">Customer ID</label>
+                                <input type="text" id="uniqueCustomerId" name="uniqueCustomerId" readonly>
+                                <small class="form-help">Auto-generated customer ID</small>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                                <i class="fas fa-undo"></i> Reset
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="updateProfileBtn">
+                                <span class="btn-text">
+                                    <i class="fas fa-save"></i> Update Profile
+                                </span>
+                                <span class="btn-loading" style="display: none;">
+                                    <i class="fas fa-spinner fa-spin"></i> Updating...
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Account Information -->
+                <div class="account-info-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-info-circle"></i> Account Information</h2>
+                        <p>Your account details and verification status</p>
+                    </div>
+                    
+                    <div class="info-cards">
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-calendar-plus"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>Member Since</h4>
+                                <p id="memberSince">Loading...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>Last Updated</h4>
+                                <p id="lastUpdated">Loading...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>Account Status</h4>
+                                <p id="accountStatusText">Loading...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="info-content">
+                                <h4>Billing Address</h4>
+                                <p id="billingAddress">Not provided</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success-modal-content">
+            <div class="success-modal-body">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Profile Updated Successfully!</h2>
+                <p id="successMessage">Your profile has been updated successfully.</p>
+                <button class="btn btn-primary" onclick="closeSuccessModal()">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content error-modal-content">
+            <div class="error-modal-body">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h2>Error</h2>
+                <p id="errorMessage">An error occurred while updating your profile.</p>
+                <button class="btn btn-primary" onclick="closeErrorModal()">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading profile...</p>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="api-service.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script src="donor-profile.js"></script>
+    <script>
+        // Ensure profile dropdown starts closed
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownMenu = document.getElementById('profileDropdownMenu');
+            if (dropdownMenu) {
+                dropdownMenu.style.display = 'none';
+                dropdownMenu.classList.remove('show');
+            }
+        });
+
+        // Navigation function to handle section links
+        function navigateToSection(sectionId) {
+            // Navigate to the main page first
+            window.location.href = 'index.html#' + sectionId;
+        }
+    </script>
+</body>
+</html>

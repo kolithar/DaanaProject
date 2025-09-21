@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Daana.lk</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Modern Signup Page Design */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .signup-page-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 140px);
+            padding: 2rem 0;
+        }
+
+        .signup-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 1000px;
+            margin: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+        }
+
+        .signup-form-section {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .signup-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .signup-logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, #f51a2d, #ff6806);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .signup-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+
+        .signup-subtitle {
+            color: #718096;
+            font-size: 1rem;
+        }
+
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f7fafc;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #f51a2d;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(245, 26, 45, 0.1);
+        }
+
+        .form-input.error {
+            border-color: #e53e3e;
+            background: #fed7d7;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #718096;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: #f51a2d;
+            background: rgba(245, 26, 45, 0.1);
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin: 0.5rem 0;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            margin-top: 0.25rem;
+        }
+
+        .checkbox-text {
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        .checkbox-text a {
+            color: #f51a2d;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .checkbox-text a:hover {
+            text-decoration: underline;
+        }
+
+        .signup-button {
+            background: linear-gradient(135deg, #f51a2d, #ff6806);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .signup-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 26, 45, 0.3);
+        }
+
+        .signup-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e2e8f0;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 1rem;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: white;
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .social-button:hover {
+            border-color: #f51a2d;
+            color: #f51a2d;
+            transform: translateY(-1px);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 2rem;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .login-link a {
+            color: #f51a2d;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .signup-visual {
+            background: linear-gradient(135deg, #f51a2d, #ff6806);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .signup-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .visual-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .visual-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .visual-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .visual-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #ffffff;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .error-message {
+            color: #e53e3e;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .success-message {
+            background: #c6f6d5;
+            color: #22543d;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        /* Footer Styling for Signup Page */
+        .footer {
+            background: #1a202c;
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 2rem;
+        }
+
+        .footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo p {
+            color: #a0aec0;
+            line-height: 1.6;
+        }
+
+        .footer-links h4,
+        .footer-contact h4 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a,
+        .footer-contact p {
+            color: #a0aec0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f51a2d;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #2d3748;
+            padding-top: 1rem;
+            text-align: center;
+            color: #a0aec0;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .signup-page-wrapper {
+                min-height: calc(100vh - 200px);
+                padding: 1rem 0;
+            }
+
+            .signup-container {
+                grid-template-columns: 1fr;
+                margin: 1rem;
+                border-radius: 15px;
+            }
+
+            .signup-visual {
+                order: -1;
+                padding: 2rem;
+            }
+
+            .signup-form-section {
+                padding: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .visual-title {
+                font-size: 1.5rem;
+            }
+
+            .signup-title {
+                font-size: 1.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .footer {
+                padding: 2rem 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="resources/logo/Danna-logo.webp" alt="Daana.lk Logo" class="logo">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+                <li><a href="index.html#categories" class="nav-link">Categories</a></li>
+                <li><a href="index.html#causes" class="nav-link">Causes</a></li>
+                <li><a href="index.html#donate" class="nav-link">Donate</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                <li class="nav-auth">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Modern Signup Container -->
+    <div class="signup-page-wrapper">
+        <div class="signup-container">
+        <!-- Signup Form Section -->
+        <div class="signup-form-section">
+            <div class="signup-header">
+                <div class="signup-logo">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h1 class="signup-title">Create Account</h1>
+                <p class="signup-subtitle">Join Daana.lk and start making a difference today</p>
+            </div>
+
+            <form id="signupForm" class="signup-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName" class="form-label">First Name *</label>
+                        <input type="text" id="firstName" name="firstName" class="form-input" required>
+                        <div class="error-message" id="firstNameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName" class="form-label">Last Name *</label>
+                        <input type="text" id="lastName" name="lastName" class="form-input" required>
+                        <div class="error-message" id="lastNameError"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address *</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Password *</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" class="form-input" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                            <i id="passwordToggleIcon" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="error-message" id="passwordError"></div>
+                    <small style="color: #718096; font-size: 0.8rem;">Password must be at least 8 characters long</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                            <i id="confirmPasswordToggleIcon" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="error-message" id="confirmPasswordError"></div>
+                </div>
+
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                    <label for="agreeTerms" class="checkbox-text">
+                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                    </label>
+                </div>
+                <div class="error-message" id="agreeTermsError"></div>
+
+                <button type="submit" class="signup-button" id="signupBtn">
+                    <span class="btn-text">Create Account</span>
+                    <span class="btn-loading" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Creating Account...
+                    </span>
+                </button>
+
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <div class="social-buttons">
+                    <a href="#" class="social-button">
+                        <i class="fab fa-google"></i>
+                        Sign up with Google
+                    </a>
+                    <a href="#" class="social-button">
+                        <i class="fab fa-facebook-f"></i>
+                        Sign up with Facebook
+                    </a>
+                </div>
+
+                <div class="login-link">
+                    Already have an account? <a href="login.html">Sign in here</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Visual Section -->
+        <div class="signup-visual">
+            <div class="visual-content">
+                <div class="visual-icon">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <h2 class="visual-title">Make a Difference</h2>
+                <p class="visual-subtitle">Join thousands of donors making a positive impact in Sri Lanka</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Active Donors</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Causes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">LKR 10M+</div>
+                        <div class="stat-label">Raised</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="resources/logo/Danna-logo.webp" alt="Daana.lk Logo" class="logo">
+                    <p>Making a difference in Sri Lanka through compassionate giving</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#causes">Causes</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> info@daana.lk</p>
+                    <p><i class="fas fa-phone"></i> +94 11 234 5678</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Daana.lk. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="api-service.js"></script>
+    <script src="auth.js"></script>
+    <script src="signup.js"></script>
+</body>
+</html>

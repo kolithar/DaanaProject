@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daana.lk - Charity Admin Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="login.css" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo">
+                <img src="resources/logo/Danna-logo.webp" alt="Daana Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <i class="fas fa-heart" style="display: none; font-size: 30px; color: #f51a2d;"></i>
+            </div>
+            <h1 class="logo-text">Daana.lk</h1>
+            <p class="subtitle">Charity Admin Portal</p>
+        </div>
+
+        <div class="login-form">
+            <div id="alertContainer"></div>
+
+            <div class="charity-info">
+                <h4><i class="fas fa-info-circle"></i> Welcome to Daana</h4>
+                <p>Your trusted platform for charity management and donations in Sri Lanka</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-container">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" class="form-control" 
+                               placeholder="Enter your email address" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-container">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" class="form-control" 
+                               placeholder="Enter your password" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="btn-text">Sign In</span>
+                    <i class="fas fa-spinner btn-loading"></i>
+                </button>
+            </form>
+
+            <div class="forgot-password">
+                <a href="forgot-password.html">Forgot your password?</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class LoginManager {
+            constructor() {
+                this.apiBase = 'http://localhost:8080/api/v1/auth/charity';
+                this.loginForm = document.getElementById('loginForm');
+                this.loginBtn = document.getElementById('loginBtn');
+                this.alertContainer = document.getElementById('alertContainer');
+                
+                this.init();
+            }
+
+            init() {
+                this.loginForm.addEventListener('submit', (e) => this.handleLogin(e));
+                
+                // Check if user is already logged in
+                if (this.isLoggedIn()) {
+                    this.redirectToDashboard();
+                }
+            }
+
+            async handleLogin(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                if (!email || !password) {
+                    this.showAlert('Please fill in all fields', 'error');
+                    return;
+                }
+
+                this.setLoading(true);
+
+                try {
+                    const response = await fetch(`${this.apiBase}/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        // Store authentication data
+                        localStorage.setItem('authToken', data.accessToken);
+                        localStorage.setItem('refreshToken', data.refreshToken);
+                        localStorage.setItem('userData', JSON.stringify({
+                            email: data.email,
+                            fullName: data.fullName,
+                            profileImageUrl: data.profileImageUrl,
+                            userId: data.userId,
+                            userType: data.userType
+                        }));
+
+                        this.showAlert('Login successful! Redirecting...', 'success');
+                        
+                        setTimeout(() => {
+                            this.redirectToDashboard();
+                        }, 1500);
+                    } else {
+                        this.showAlert(data.message || 'Login failed. Please check your credentials.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    this.showAlert('Network error. Please check your connection and try again.', 'error');
+                } finally {
+                    this.setLoading(false);
+                }
+            }
+
+            setLoading(loading) {
+                const btnText = this.loginBtn.querySelector('.btn-text');
+                const btnLoading = this.loginBtn.querySelector('.btn-loading');
+                
+                if (loading) {
+                    this.loginBtn.disabled = true;
+                    btnText.textContent = 'Signing In...';
+                    btnLoading.classList.add('show');
+                } else {
+                    this.loginBtn.disabled = false;
+                    btnText.textContent = 'Sign In';
+                    btnLoading.classList.remove('show');
+                }
+            }
+
+            showAlert(message, type) {
+                this.alertContainer.innerHTML = `
+                    <div class="alert alert-${type}">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                        ${message}
+                    </div>
+                `;
+                
+                // Auto-hide success messages
+                if (type === 'success') {
+                    setTimeout(() => {
+                        this.alertContainer.innerHTML = '';
+                    }, 3000);
+                }
+            }
+
+            isLoggedIn() {
+                return localStorage.getItem('authToken') !== null;
+            }
+
+            redirectToDashboard() {
+                window.location.href = 'admin-dashboard.html';
+            }
+        }
+
+        // Initialize login manager when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new LoginManager();
+        });
+    </script>
+</body>
+</html>

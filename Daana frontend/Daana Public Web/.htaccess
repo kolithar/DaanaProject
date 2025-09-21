@@ -1,0 +1,22 @@
+# Apache .htaccess file for handling dynamic program URLs
+# This file enables clean URLs for the program details page
+
+RewriteEngine On
+
+# Handle program.html/{slug} URLs
+RewriteRule ^program\.html/([a-zA-Z0-9\-_]+)/?$ program.html?slug=$1 [L,QSA]
+
+# Handle program/{slug} URLs (alternative format)
+RewriteRule ^program/([a-zA-Z0-9\-_]+)/?$ program.html?slug=$1 [L,QSA]
+
+# Optional: Redirect old format to new format
+RewriteRule ^program\.html/([a-zA-Z0-9\-_]+)/?$ program.html?slug=$1 [R=301,L,QSA]
+
+# Enable CORS for API calls (if needed)
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization"
+
+# Handle preflight requests
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=200,L]
